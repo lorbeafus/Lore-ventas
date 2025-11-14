@@ -361,6 +361,30 @@ footer p {
 .btn-enviar:hover {
     background-color: #e08c1b;
 }
+/*======= ALERTAS FORMULARIO DE CONTACTO - Boostrap========*/
+#liveAlertPlaceholder{
+    margin-top: 1rem;
+    animation: slidedown 0.3s ease-out;
+}
+
+#liveAlertPlaceholder .alert{
+    background-color: #e9d0ba;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+}
+
+#liveAlertPlaceholder .alert-success{
+    background-color: #e9d0ba;
+    border-color: #e08c1b;
+    color: #333;
+}
+
+#liveAlertPlaceholder .alert-danger{
+    background-color: #e9d0ba;
+    border-color: #e08c1b;
+    color: #330c0c;
+}
 
 /* ========== RESPONSIVE ========== */
 .hamburguesa {
