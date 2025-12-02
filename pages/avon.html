@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lore Ventas - ARBELL</title>
+    <title>Lore Ventas - AVON</title>
     <!-- Enlace a Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-    <link rel="stylesheet" href="../assets/CSS/styles.css">
+    <link rel="stylesheet" href="../assets/CSS/style.css">
 </head>
 
 <body>
+    <!-- Barra de navegacion -->
     <header>
         <div class="top-bar">
             <div class="logo">
@@ -25,8 +26,16 @@
                     </button>
                 </form>
             </div>
-            <div class="user-icon">
-                <i class="fa-solid fa-user"></i>
+            <div class="user-container">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="cart-container">
+                    <a href="./cart.html" class="cart-icon">
+                        <i class="fa-solid fa-shopping-cart"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </div>
             </div>
         </div>
         <nav>
@@ -41,69 +50,68 @@
         <i class="fa-solid fa-bars hamburguesa"></i>
     </header>
 
-    <main>
+    <main class="main-avon">
+        <!-- Banner -->
+        <section class="banner">
+            <img src="../assets/img/banneravon.png" alt="Banner">
+        </section>
+        <!-- Catalogo -->
         <section class="catalogo">
-            <div class="productos-contenedor">
-                <div class="producto">
-                    <div class="img-box"><img src="../assets/img/SerumAneu.jpg" alt="Producto 1"></div>
-                    <p>Serum Anew</p>
-                    <p>$4.500</p>
-                    <label><input type="checkbox"> Agregar</label>
-                </div>
+            <div class="catalog-layout">
+                <!-- Filtros -->
+                <aside class="filters-sidebar">
+                    <h3><i class="fa-solid fa-filter"></i> Filtros</h3>
 
-                <div class="producto">
-                    <div class="img-box"><img src="../assets/img/CremaHAnew.jpg" alt="Producto 2"></div>
-                    <p>Crema Hidratante Anew</p>
-                    <p>$10.200</p>
-                    <label><input type="checkbox"> Agregar</label>
-                </div>
-
-                <div class="producto">
-                    <div class="img-box"><img src="../assets/img/ProtectorSolarAnew.jpg" alt="Producto 3"></div>
-                    <p>Protector Solar Anew</p>
-                    <p>$3.000</p>
-                    <label><input type="checkbox"> Agregar</label>
-                </div>
-
-                <div class="producto">
-                    <div class="img-box"><img src="../assets/img/Makeup.jpg" alt="Producto 4"></div>
-                    <p>Make Up Anew</p>
-                    <p>$5.800</p>
-                    <label><input type="checkbox"> Agregar</label>
-                </div>
-
-                <div class="producto">
-                    <div class="img-box"><img src="../assets/img/MaquillajeLD.jpg" alt="Producto 5"></div>
-                    <p>Maquillaje Larga Duracion</p>
-                    <p>$2.700</p>
-                    <label><input type="checkbox"> Agregar</label>
-                </div>
-
-                <div class="producto">
-                    <div class="img-box"><img src="../assets/img/TintLabial.jpg" alt="Producto 6"></div>
-                    <p>Tint Labial Stay</p>
-                    <p>$2.200</p>
-                    <label><input type="checkbox"> Agregar</label>
-                </div>
-
-                <div class="producto">
-                    <div class="img-box"><img src="../assets/img/serumavonah.jpg" alt="Producto 6"></div>
-                    <p>Serum acido hialuronico</p>
-                    <p>$32.200</p>
-                    <label><input type="checkbox"> Agregar</label>
-                </div>
-
-                <div class="producto">
-                    <div class="img-box"><img src="../assets/img/baseavon.jpeg" alt="Producto 6"></div>
-                    <p>Base</p>
-                    <p>$2.200</p>
-                    <label><input type="checkbox"> Agregar</label>
+                    <!-- Filtro por Precio -->
+                    <div class="filter-group">
+                        <h4><i class="fa-solid fa-dollar-sign"></i> Precio</h4>
+                        <div class="price-range">
+                            <div class="price-inputs">
+                                <input type="number" id="min-price" placeholder="Mín" min="0">
+                                <span>-</span>
+                                <input type="number" id="max-price" placeholder="Máx" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Filtro por Categoría -->
+                    <div class="filter-group">
+                        <h4><i class="fa-solid fa-tags"></i> Categoría</h4>
+                        <div class="filter-options">
+                            <label>
+                                <input type="checkbox" name="category" value="maquillaje">
+                                <span>Maquillaje</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" name="category" value="perfumeria">
+                                <span>Perfumería</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" name="category" value="cuidados">
+                                <span>Cuidados Diarios</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Botones de acción -->
+                    <div class="filter-actions">
+                        <button class="apply-filters" id="apply-filters">
+                            <i class="fa-solid fa-check"></i> Aplicar
+                        </button>
+                        <button class="clear-filters" id="clear-filters">
+                            <i class="fa-solid fa-times"></i> Limpiar
+                        </button>
+                    </div>
+                </aside>
+                <!-- Productos -->
+                <div class="productos-contenedor">
+                    <!-- Contenedor para productos dinámicos -->
+                    <!-- Los productos dinámicos se cargarán aquí -->
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
+        <!-- Contacto -->
         <div class="contacto">
             <div class="payment">
                 <p>Métodos de pago:</p>
@@ -118,6 +126,7 @@
                 </a>
             </h2>
         </div>
+        <!-- Redes Sociales -->
         <div class="redes">
             <a href="https://www.instagram.com/lore.fusillo.makeup" target="_blank" rel="noopener noreferrer">
                 <i class="fa-brands fa-instagram"></i>Instagram</a>
@@ -127,7 +136,26 @@
             <a href="https://x.com/NaturaArgentina" target="_blank" rel="noopener noreferrer">
                 <i class="fa-brands fa-twitter"></i>X</a>
         </div>
-        </div>
     </footer>
+    <!-- Scripts -->
     <script src="../assets/JS/menu.js"></script>
+    <script src="../assets/JS/userMenu.js" type="module"></script>
+    <script type="module">
+        import { loadProducts } from '../assets/JS/productLoader.js';
+        import { initCartBadge } from '../assets/JS/cart.js';
+        import { initSearch } from '../assets/JS/search.js';
+        import { initFilters } from '../assets/JS/filters.js';
+        import '../assets/JS/productCart.js';
+
+        // Cargar productos y luego inicializar filtros
+        (async () => {
+            await loadProducts('avon');
+            initFilters();
+        })();
+
+        initCartBadge();
+        initSearch();
+    </script>
 </body>
+
+</html>

@@ -8,7 +8,7 @@
     <!-- Enlace a Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <!-- Enlace al archivo CSS -->
-    <link rel="stylesheet" href="./assets/CSS/styles.css">
+    <link rel="stylesheet" href="./assets/CSS/style.css">
 
 </head>
 
@@ -28,8 +28,16 @@
                     </button>
                 </form>
             </div>
-            <div class="user-icon">
-                <i class="fa-solid fa-user"></i>
+            <div class="user-container">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="cart-container">
+                    <a href="./pages/cart.html" class="cart-icon">
+                        <i class="fa-solid fa-shopping-cart"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </div>
             </div>
         </div>
         <nav class="nav-bar">
@@ -61,6 +69,18 @@
                 </div>
             </div>
         </section>
+
+        <!-- Productos Destacados -->
+        <section class="destacados" style="padding: 40px 20px; text-align: center;">
+            <h2 style="margin-bottom: 30px; font-size: 2rem; color: #333;">
+                <i class="fa-solid fa-star" style="color: #f47920;"></i> Productos Destacados
+            </h2>
+            <div id="featured-products-container" class="productos-contenedor"
+                style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+                <!-- Productos se cargarán aquí -->
+                <p>Cargando destacados...</p>
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -90,7 +110,17 @@
         </div>
     </footer>
     <script src="./assets/JS/menu.js"></script>
+    <script src="./assets/JS/userMenu.js" type="module"></script>
     <script src="./assets/JS/slider.js"></script>
+    <script type="module">
+        import { initCartBadge } from './assets/JS/cart.js';
+        import { initSearch } from './assets/JS/search.js';
+        import { initFeaturedProducts } from './assets/JS/featuredProducts.js';
+
+        initCartBadge();
+        initSearch();
+        initFeaturedProducts();
+    </script>
 </body>
 
 </html>

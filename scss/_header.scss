@@ -1,0 +1,255 @@
+/**
+ * HEADER & NAVIGATION - CON ANIDAMIENTO SCSS
+ * 
+ * CONCEPTO DE NESTING (ANIDAMIENTO):
+ * En lugar de escribir selectores separados como:
+ *   header { ... }
+ *   header h1 { ... }
+ *   header nav { ... }
+ * 
+ * Podemos anidarlos para reflejar la estructura HTML:
+ *   header {
+ *     ...
+ *     h1 { ... }
+ *     nav { ... }
+ *   }
+ * 
+ * BENEFICIOS:
+ * 1. Más fácil de leer - refleja la estructura HTML
+ * 2. Menos repetición de selectores padre
+ * 3. Mejor organización del código
+ * 4. Más fácil de mantener
+ */
+
+// ========== HEADER ==========
+header {
+    background-image: linear-gradient(to bottom, #eec17e, $background-light);
+    border-bottom: 1px solid $border-color;
+    padding: $spacing-md $spacing-xl;
+    @include flex-column;
+
+    // EXPLICACIÓN: h1 está anidado dentro de header
+    // Esto genera: header h1 { ... }
+    h1 {
+        font-size: $font-size-xxlarge;
+        font-family: 'Rubik', sans-serif;
+        color: $text-color;
+        margin: $spacing-md 0;
+    }
+}
+
+// ========== TOP BAR ==========
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-xl;
+    padding-bottom: $spacing-lg;
+    position: relative;
+}
+
+// ========== LOGO ==========
+.logo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    min-width: 250px;
+    cursor: default;
+    user-select: none;
+
+    // EXPLICACIÓN: Anidamos img y h1 dentro de .logo
+    // Esto genera: .logo img { ... } y .logo h1 { ... }
+    img,
+    h1 {
+        pointer-events: none;
+        user-select: none;
+    }
+}
+
+// ========== SEARCH ==========
+.search-container {
+    flex: 1;
+    max-width: 500px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-form {
+    display: flex;
+    width: 100%;
+
+    // EXPLICACIÓN: Anidamos los elementos del formulario
+    // Esto genera: .search-form input[type="search"] { ... }
+    input[type="search"] {
+        flex: 1;
+        padding: 8px 12px;
+        border: 1px solid #aaa;
+        border-radius: $border-radius-sm 0 0 $border-radius-sm;
+        outline: none;
+
+        // EXPLICACIÓN: & representa el selector padre
+        // Aquí & = input[type="search"]
+        // Esto genera: .search-form input[type="search"]:focus { ... }
+        &:focus {
+            border-color: $primary-color;
+        }
+    }
+
+    button {
+        padding: 8px 16px;
+        background: $primary-color;
+        border: none;
+        border-radius: 0 $border-radius-sm $border-radius-sm 0;
+        color: $white;
+        cursor: pointer;
+        transition: background $transition-fast;
+
+        // EXPLICACIÓN: Usando mixin para hover
+        @include hover-effect($primary-hover);
+    }
+}
+
+// ========== USER CONTAINER & ICON ==========
+.user-container {
+    @include flex-column;
+    align-items: center;
+    gap: $spacing-xs;
+    position: relative;
+}
+
+.user-icon {
+    font-size: $font-size-xxlarge;
+    cursor: pointer;
+}
+
+.user-name {
+    font-size: $font-size-small;
+    color: $text-color;
+    text-align: center;
+    margin-top: $spacing-xs;
+    cursor: pointer;
+}
+
+// ========== USER MENU ==========
+.user-menu {
+    position: absolute;
+    background: $white;
+    border: 1px solid $border-light;
+    @include box-shadow-large;
+    padding: $spacing-sm;
+    border-radius: $border-radius-md;
+    min-width: 140px;
+    display: none;
+    z-index: 2000;
+
+    // EXPLICACIÓN: & representa .user-menu
+    // Esto genera: .user-menu.open { ... }
+    &.open {
+        display: block;
+    }
+
+    // EXPLICACIÓN: Anidamos los items del menú
+    // Esto genera: .user-menu .user-menu-item { ... }
+    .user-menu-item {
+        padding: 8px $spacing-md;
+        font-size: $font-size-small;
+        color: $text-color;
+        background: transparent;
+        border: none;
+        text-align: left;
+        width: 100%;
+        display: block;
+        text-decoration: none;
+        cursor: pointer;
+
+        // EXPLICACIÓN: Hover para todos los items
+        &:hover {
+            background-color: #f5f5f5;
+        }
+    }
+
+    // EXPLICACIÓN: Selector específico para logout
+    // Esto genera: .user-menu .user-logout { ... }
+    .user-logout {
+        color: $error-color;
+        cursor: pointer;
+    }
+}
+
+// ========== NAVIGATION ==========
+nav {
+    margin-top: $spacing-md;
+    border-top: 1px solid $border-color;
+    padding-top: $spacing-lg;
+
+    // EXPLICACIÓN: Anidamos ul dentro de nav
+    ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: $spacing-xxxl;
+    }
+
+    // EXPLICACIÓN: Anidamos a dentro de nav
+    // Esto genera: nav a { ... }
+    a {
+        text-decoration: none;
+        color: #000000b2;
+        font-weight: 500;
+        font-size: $font-size-xxxlarge;
+        position: relative;
+        padding-bottom: $spacing-xs;
+
+        // EXPLICACIÓN: Pseudo-elemento ::after
+        // & = nav a, entonces esto genera: nav a::after { ... }
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: $primary-color;
+            transition: width $transition-normal;
+        }
+
+        // EXPLICACIÓN: Hover que afecta al ::after
+        // Esto genera: nav a:hover::after { ... }
+        &:hover::after {
+            width: 100%;
+        }
+    }
+}
+
+// ========== HAMBURGER MENU ==========
+.hamburguesa {
+    display: none !important;
+    color: $text-light;
+    font-size: $font-size-xxlarge;
+    cursor: pointer;
+}
+
+/**
+ * RESUMEN DE NESTING:
+ * 
+ * ANTES (sin nesting):
+ * .search-form { ... }
+ * .search-form input[type="search"] { ... }
+ * .search-form input[type="search"]:focus { ... }
+ * .search-form button { ... }
+ * 
+ * AHORA (con nesting):
+ * .search-form {
+ *   ...
+ *   input[type="search"] {
+ *     ...
+ *     &:focus { ... }
+ *   }
+ *   button { ... }
+ * }
+ * 
+ * VENTAJAS:
+ * - Estructura más clara
+ * - Menos repetición
+ * - Más fácil de modificar
+ */

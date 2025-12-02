@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Lore Ventas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/CSS/style.css">
+</head>
+
+<body>
+    <!-- Barra de navegacion -->
+    <header>
+        <div class="top-bar">
+            <div class="logo">
+                <img src="../assets/img/Logo.png" width="150" alt="Logo Lore">
+                <h1>Lorena Fusillo <br>Cosmetica</h1>
+            </div>
+            <div class="search-container">
+                <form class="search-form" role="search">
+                    <input type="search" name="buscar" placeholder="Buscar productos..." aria-label="Buscar productos">
+                    <button type="submit" aria-label="Buscar">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+            <div class="user-container">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="cart-container">
+                    <a href="./cart.html" class="cart-icon">
+                        <i class="fa-solid fa-shopping-cart"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Promociones</a></li>
+                <li><a href="./natura.html">Natura</a></li>
+                <li><a href="./avon.html">Avon</a></li>
+                <li><a href="./arbell.html">Arbell</a></li>
+                <li><a href="./Contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+        <i class="fa-solid fa-bars hamburguesa"></i>
+    </header>
+
+    <main class="checkout-page">
+        <!-- Checkout -->
+        <h2><i class="fa-solid fa-credit-card"></i> Finalizar Compra</h2>
+
+        <!-- Order Summary -->
+        <div class="checkout-container">
+            <div class="order-summary">
+                <h3>Resumen del Pedido</h3>
+                <div id="checkout-items-container">
+                    <!-- Populated by JavaScript -->
+                </div>
+
+                <div class="order-totals">
+                    <div class="order-row">
+                        <span>Subtotal:</span>
+                        <span id="checkout-subtotal">$0</span>
+                    </div>
+                    <div class="order-row total">
+                        <span>Total:</span>
+                        <span id="checkout-total">$0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Section -->
+            <div class="payment-section">
+                <h3>Método de Pago</h3>
+                <div class="payment-info">
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-solid fa-money-bill"></i>
+                    <p>Pago seguro procesado por MercadoPago</p>
+                </div>
+
+                <button id="pay-button" class="btn-pay">
+                    <i class="fa-solid fa-lock"></i> Proceder al Pago
+                </button>
+
+                <button class="btn-back" onclick="window.location.href='./cart.html'">
+                    <i class="fa-solid fa-arrow-left"></i> Volver al Carrito
+                </button>
+
+                <!-- Loading State -->
+                <div id="payment-loading" class="payment-loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Procesando pago...</p>
+                </div>
+
+                <!-- Error Message -->
+                <div id="payment-error" class="payment-error" style="display: none;">
+                    <i class="fa-solid fa-exclamation-circle"></i>
+                    <p id="error-message"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty Cart Message -->
+        <div id="empty-checkout" class="empty-state" style="display: none;">
+            <i class="fa-solid fa-shopping-cart"></i>
+            <h3>Tu carrito está vacío</h3>
+            <p>Agrega productos para continuar con la compra</p>
+            <button class="btn-continue-shopping" onclick="window.location.href='../index.html'">
+                <i class="fa-solid fa-shopping-bag"></i> Ir a Comprar
+            </button>
+        </div>
+    </main>
+
+    <footer>
+        <!-- Contacto -->
+        <div class="contacto">
+            <div class="payment">
+                <p>Métodos de pago:</p>
+                <div class="icons">
+                    <img src="../assets/img/metodos.png" width="100" alt="Métodos de pago">
+                </div>
+            </div>
+            <h2>
+                <p>Contacto</p>
+                <a href="./Contacto.html" target="_blank" rel="noopener noreferrer">
+                    <img src="../assets/img/contacto.png" class="contact-icon" alt="Contacto">
+                </a>
+            </h2>
+        </div>
+        <div class="redes">
+            <!-- Redes Sociales -->
+            <a href="https://www.instagram.com/lore.fusillo.makeup" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-instagram"></i>Instagram</a>
+            <a href="https://www.facebook.com/Natura.Argentina/?brand_redir=382381445421" target="_blank"
+                rel="noopener noreferrer">
+                <i class="fa-brands fa-facebook"></i> facebook</a>
+            <a href="https://x.com/NaturaArgentina" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-twitter"></i>X</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/JS/menu.js"></script>
+    <script src="../assets/JS/userMenu.js" type="module"></script>
+    <script type="module">
+        import { initCartBadge } from '../assets/JS/cart.js';
+        import { initSearch } from '../assets/JS/search.js';
+        import { initCheckout } from '../assets/JS/checkout.js';
+
+        initCartBadge();
+        initSearch();
+        initCheckout();
+    </script>
+</body>
+
+</html>

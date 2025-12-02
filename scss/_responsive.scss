@@ -1,0 +1,313 @@
+/**
+ * RESPONSIVE DESIGN - CON ANIDAMIENTO SCSS
+ * 
+ * EXPLICACIÓN:
+ * En responsive, el anidamiento es especialmente útil
+ * porque podemos agrupar todos los cambios de un elemento
+ * dentro de su media query
+ */
+
+// ========== RESPONSIVE ==========
+@media (max-width: $breakpoint-mobile) {
+
+    // ========== HEADER ==========
+    header {
+        position: relative;
+    }
+
+    // ========== HAMBURGUESA ==========
+    .hamburguesa {
+        display: block !important;
+        position: absolute;
+        right: $spacing-xl;
+        top: $spacing-lg;
+    }
+
+    // ========== USER ICON ==========
+    // Nota: El user-icon ahora está dentro de user-container, no necesita posicionamiento absoluto propio
+
+    // ========== TOP BAR ==========
+    .top-bar {
+        @include flex-column;
+        align-items: center;
+        gap: $spacing-md;
+        padding: 50px $spacing-md $spacing-md;
+    }
+
+    // ========== LOGO ==========
+    .logo {
+        order: 1;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        width: 100%;
+        gap: 0; // Eliminar espacio heredado
+
+        img {
+            margin-bottom: 0;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            margin-left: 0;
+        }
+    }
+
+    // ========== SEARCH ==========
+    .search-container {
+        order: 2;
+        width: 100%;
+        max-width: 90%;
+        justify-content: center;
+    }
+
+    // ========== USER CONTAINER ==========
+    .user-container {
+        position: absolute;
+        left: $spacing-xl;
+        top: $spacing-lg; // Alineado con el hamburger
+        @include flex-column;
+        align-items: flex-start;
+        gap: $spacing-xs; // Espacio pequeño entre user-icon y cart
+    }
+
+    // ========== CART CONTAINER ==========
+    .cart-container {
+        position: relative;
+        left: 0;
+        top: 0;
+    }
+
+    // ========== PRODUCT GRID ==========
+    .productos-contenedor {
+        grid-template-columns: repeat(2, 1fr); // 2 columnas en mobile
+        gap: $spacing-sm;
+        padding: 0 $spacing-md;
+    }
+
+    .producto {
+        width: 100%;
+        height: auto;
+    }
+
+    // ========== NAV ==========
+    nav {
+        width: 100%;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background-color: #ddb28a;
+        border-top: 1px solid $border-color;
+        display: none; // Oculto por defecto
+        flex-direction: column; // Preparado para cuando se active
+        align-items: center;
+        z-index: 1000;
+        transition: all $transition-normal;
+
+        // EXPLICACIÓN: & = nav
+        // Esto genera: nav.active { ... }
+        &.active {
+            display: flex;
+        }
+
+        // EXPLICACIÓN: Anidamos ul dentro de nav
+        // Esto genera: nav ul { ... } (dentro del media query)
+        ul {
+            @include flex-column;
+            gap: $spacing-xl;
+            width: 100%;
+            padding: $spacing-xl 0;
+
+            // EXPLICACIÓN: Anidamos li dentro de ul
+            // Esto genera: nav ul li { ... }
+            li {
+                width: 100%;
+                text-align: center;
+
+                // EXPLICACIÓN: Anidamos a dentro de li
+                // Esto genera: nav ul li a { ... }
+                a {
+                    font-size: $font-size-xlarge;
+                    display: block;
+                    padding: $spacing-md;
+                    color: $text-color;
+
+                    // EXPLICACIÓN: Hover para enlaces móviles
+                    // Esto genera: nav ul li a:hover { ... }
+                    &:hover {
+                        background-color: $primary-color;
+                        color: $white;
+                    }
+                }
+            }
+        }
+    }
+
+    // ========== CART PAGE ==========
+    .cart-page {
+        padding: $spacing-md;
+        margin: $spacing-md auto;
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: $spacing-lg;
+        }
+    }
+
+    // ========== CART EMPTY STATE ==========
+    .cart-empty {
+        padding: 40px $spacing-md;
+
+        i {
+            font-size: 48px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+    }
+
+    // ========== CART ITEMS ==========
+    .cart-item {
+        @include flex-column;
+        gap: $spacing-md;
+        padding: $spacing-md;
+        align-items: flex-start;
+
+        // Image on mobile
+        &-image {
+            width: 80px;
+            height: 80px;
+            align-self: center;
+        }
+
+        // Info section
+        &-info {
+            width: 100%;
+            text-align: center;
+        }
+
+        &-name {
+            font-size: 16px;
+        }
+
+        &-brand {
+            font-size: 11px;
+        }
+
+        &-price {
+            font-size: 18px;
+        }
+
+        // Quantity controls
+        &-quantity {
+            align-self: center;
+            gap: $spacing-md;
+        }
+
+        // Subtotal
+        &-subtotal {
+            align-self: center;
+            font-size: 18px;
+        }
+
+        // Remove button
+        &-remove {
+            align-self: center;
+            width: 100%;
+            max-width: 200px;
+            padding: $spacing-sm $spacing-md;
+        }
+    }
+
+    // ========== CART SUMMARY ==========
+    .cart-summary {
+        padding: $spacing-lg;
+
+        &-row {
+            font-size: 14px;
+            margin-bottom: $spacing-sm;
+
+            &.total {
+                font-size: 20px;
+                padding-top: $spacing-sm;
+            }
+        }
+    }
+
+    // ========== CART ACTIONS ==========
+    .cart-actions {
+        @include flex-column;
+        gap: $spacing-sm;
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+        }
+    }
+
+    // ========== MENU GRID ==========
+    .menu-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+
+    // ========== FOOTER ==========
+    footer {
+        justify-content: space-between;
+        padding: $spacing-md;
+    }
+
+    .redes {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+
+        a {
+            margin: 5px 0;
+        }
+    }
+}
+
+/**
+ * VENTAJA DEL NESTING EN RESPONSIVE:
+ * 
+ * ANTES (sin nesting):
+ * @media (max-width: 991px) {
+ *   nav { ... }
+ *   nav.active { ... }
+ *   nav ul { ... }
+ *   nav ul li { ... }
+ *   nav ul li a { ... }
+ *   nav ul li a:hover { ... }
+ * }
+ * 
+ * AHORA (con nesting):
+ * @media (max-width: 991px) {
+ *   nav {
+ *     ...
+ *     &.active { ... }
+ *     ul {
+ *       ...
+ *       li {
+ *         ...
+ *         a {
+ *           ...
+ *           &:hover { ... }
+ *         }
+ *       }
+ *     }
+ *   }
+ * }
+ * 
+ * BENEFICIOS:
+ * - Estructura clara que refleja el HTML
+ * - Fácil ver qué estilos se aplican en móvil
+ * - Menos repetición de selectores
+ * - Más fácil de mantener
+ */

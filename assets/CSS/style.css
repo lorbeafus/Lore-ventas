@@ -1,0 +1,2041 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Rubik", Arial, sans-serif;
+}
+
+body {
+  background-color: #f8f9fb;
+  color: #333;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Rubik", Arial, sans-serif;
+}
+
+body {
+  background-color: #f8f9fb;
+  color: #333;
+}
+
+/**
+ * HEADER & NAVIGATION - CON ANIDAMIENTO SCSS
+ * 
+ * CONCEPTO DE NESTING (ANIDAMIENTO):
+ * En lugar de escribir selectores separados como:
+ *   header { ... }
+ *   header h1 { ... }
+ *   header nav { ... }
+ * 
+ * Podemos anidarlos para reflejar la estructura HTML:
+ *   header {
+ *     ...
+ *     h1 { ... }
+ *     nav { ... }
+ *   }
+ * 
+ * BENEFICIOS:
+ * 1. Más fácil de leer - refleja la estructura HTML
+ * 2. Menos repetición de selectores padre
+ * 3. Mejor organización del código
+ * 4. Más fácil de mantener
+ */
+header {
+  background-image: linear-gradient(to bottom, #eec17e, #f8f9fb);
+  border-bottom: 1px solid #ccc;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+}
+header h1 {
+  font-size: 24px;
+  font-family: "Rubik", sans-serif;
+  color: #333;
+  margin: 10px 0;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 15px;
+  position: relative;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 250px;
+  cursor: default;
+  user-select: none;
+}
+.logo img,
+.logo h1 {
+  pointer-events: none;
+  user-select: none;
+}
+
+.search-container {
+  flex: 1;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-form {
+  display: flex;
+  width: 100%;
+}
+.search-form input[type=search] {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #aaa;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+}
+.search-form input[type=search]:focus {
+  border-color: #f5a938;
+}
+.search-form button {
+  padding: 8px 16px;
+  background: #f5a938;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.search-form button:hover {
+  background-color: #e08c1b;
+}
+
+.user-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.user-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.user-name {
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  margin-top: 4px;
+  cursor: pointer;
+}
+
+.user-menu {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 6px;
+  border-radius: 6px;
+  min-width: 140px;
+  display: none;
+  z-index: 2000;
+}
+.user-menu.open {
+  display: block;
+}
+.user-menu .user-menu-item {
+  padding: 8px 10px;
+  font-size: 14px;
+  color: #333;
+  background: transparent;
+  border: none;
+  text-align: left;
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+.user-menu .user-menu-item:hover {
+  background-color: #f5f5f5;
+}
+.user-menu .user-logout {
+  color: #d33;
+  cursor: pointer;
+}
+
+nav {
+  margin-top: 10px;
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+nav a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.6980392157);
+  font-weight: 500;
+  font-size: 25px;
+  position: relative;
+  padding-bottom: 4px;
+}
+nav a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #f5a938;
+  transition: width 0.3s ease;
+}
+nav a:hover::after {
+  width: 100%;
+}
+
+.hamburguesa {
+  display: none !important;
+  color: #555;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/**
+ * RESUMEN DE NESTING:
+ * 
+ * ANTES (sin nesting):
+ * .search-form { ... }
+ * .search-form input[type="search"] { ... }
+ * .search-form input[type="search"]:focus { ... }
+ * .search-form button { ... }
+ * 
+ * AHORA (con nesting):
+ * .search-form {
+ *   ...
+ *   input[type="search"] {
+ *     ...
+ *     &:focus { ... }
+ *   }
+ *   button { ... }
+ * }
+ * 
+ * VENTAJAS:
+ * - Estructura más clara
+ * - Menos repetición
+ * - Más fácil de modificar
+ */
+/**
+ * FOOTER - CON ANIDAMIENTO SCSS
+ * 
+ * EXPLICACIÓN:
+ * Anidamos todos los elementos relacionados dentro de footer
+ * para reflejar la estructura HTML y mejorar la organización
+ */
+footer {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  border-top: 1px solid #ccc;
+  background-color: rgba(221, 178, 138, 0.3568627451);
+}
+
+.contacto {
+  font-family: "Rubik", Arial, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+.contacto h2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+.contacto p {
+  margin: 10px 0 5px;
+  font-weight: 500;
+}
+
+.payment-methods {
+  font-family: "Rubik", Arial, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-icon {
+  width: 22px;
+  height: auto;
+}
+
+.redes a {
+  color: rgba(0, 0, 0, 0.6980392157);
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/**
+ * EJEMPLO DE MEJORA:
+ * 
+ * Si quisiéramos agregar hover a los enlaces sociales:
+ * 
+ * .redes {
+ *   a {
+ *     ...
+ *     transition: color $transition-fast;
+ *     
+ *     &:hover {
+ *       color: $primary-color;
+ *     }
+ *   }
+ * }
+ */
+/**
+ * MAIN CONTENT - CON ANIDAMIENTO SCSS
+ * 
+ * EXPLICACIÓN:
+ * Anidamos los elementos del slider y contenido principal
+ */
+main {
+  padding: 20px;
+}
+
+.promo-slider {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  background-color: rgba(221, 178, 138, 0.3568627451);
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.slides {
+  position: relative;
+  width: 100%;
+}
+.slides img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  border-radius: 8px;
+}
+.slides img.active {
+  position: relative;
+  opacity: 1;
+  z-index: 1;
+}
+
+.slider-dots {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 5px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.dot.active {
+  background-color: #f5a938;
+}
+
+.banner {
+  max-width: 1400px;
+  max-height: 200px;
+  margin: 0 auto 15px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 0;
+}
+.banner img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+/**
+ * PATRÓN COMÚN EN NESTING:
+ * 
+ * Cuando tienes un elemento con modificadores (clases adicionales),
+ * usa & para referirte al selector padre:
+ * 
+ * .dot {
+ *   // estilos base
+ *   
+ *   &.active {  // .dot.active
+ *     // estilos cuando está activo
+ *   }
+ *   
+ *   &:hover {  // .dot:hover
+ *     // estilos en hover
+ *   }
+ *   
+ *   &:disabled {  // .dot:disabled
+ *     // estilos cuando está deshabilitado
+ *   }
+ * }
+ */
+/**
+ * FORMS & INPUTS - CON ANIDAMIENTO SCSS
+ * 
+ * EXPLICACIÓN:
+ * Agrupamos todos los elementos de formulario con anidamiento
+ * para mejor organización y mantenimiento
+ */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border-color 0.2s ease;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #f5a938;
+  outline: none;
+}
+.form-group textarea {
+  resize: vertical;
+}
+
+.profile-info {
+  padding: 10px 12px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+  color: #555;
+  margin: 0;
+}
+
+.btn-enviar {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 6px;
+  font-size: 17px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  background-color: #f5a938;
+  color: #fff;
+}
+.btn-enviar:hover {
+  background-color: #e08c1b;
+}
+
+.btn-cancelar {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 6px;
+  font-size: 17px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  background-color: #888;
+  color: #fff;
+}
+.btn-cancelar:hover {
+  background-color: #666;
+}
+
+.disabled-input {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.contacto-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.contacto-container h2 {
+  font-size: 28px;
+  color: #4a2b78;
+  margin-bottom: 15px;
+}
+.contacto-container p {
+  margin-bottom: 25px;
+  color: #555;
+}
+
+/**
+ * VENTAJA DEL NESTING EN FORMULARIOS:
+ * 
+ * ANTES (sin nesting):
+ * .form-group { ... }
+ * .form-group label { ... }
+ * .form-group input { ... }
+ * .form-group textarea { ... }
+ * 
+ * AHORA (con nesting):
+ * .form-group {
+ *   ...
+ *   label { ... }
+ *   input, textarea { ... }
+ *   textarea { ... }
+ * }
+ * 
+ * Es más fácil ver que todos estos elementos pertenecen a .form-group
+ */
+/**
+ * BADGES - ESTILOS PARA BADGES DE ROLES
+ * 
+ * EXPLICACIÓN:
+ * Badges visuales para mostrar el rol del usuario
+ * con colores distintivos para cada tipo
+ */
+.role-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 6px;
+}
+.role-badge.role-user {
+  background-color: rgb(215.8369098712, 218.6566523605, 221.1630901288);
+  color: rgb(84.3605150215, 91.3905579399, 97.6394849785);
+  border: 1px solid #6c757d;
+}
+.role-badge.role-admin {
+  background-color: rgb(195.7028985507, 240.7971014493, 206);
+  color: rgb(25.2173913043, 105.2826086957, 43.5);
+  border: 1px solid #28a745;
+}
+.role-badge.role-developer {
+  background-color: rgb(229.5, 241.8, 255);
+  color: rgb(0, 98.4, 204);
+  border: 1px solid #007bff;
+}
+
+/**
+ * EJEMPLO DE USO EN HTML:
+ * 
+ * <span class="role-badge role-user">Usuario</span>
+ * <span class="role-badge role-admin">Administrador</span>
+ * <span class="role-badge role-developer">Desarrollador</span>
+ */
+/**
+ * ESTILOS PARA EL PANEL DE ADMINISTRACIÓN
+ */
+/* Contenedor del formulario */
+#product-form-container {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto 2rem;
+}
+#product-form-container h3 {
+  color: #f5a938;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid rgba(221, 178, 138, 0.3568627451);
+  padding-bottom: 0.5rem;
+}
+
+/* Estilos del formulario */
+#product-form {
+  display: grid;
+  gap: 1.5rem;
+}
+#product-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+#product-form .form-group label {
+  font-weight: 600;
+  color: #333;
+}
+#product-form .form-group label i {
+  color: #f5a938;
+  margin-right: 5px;
+}
+#product-form .form-group input,
+#product-form .form-group textarea,
+#product-form .form-group select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  transition: border-color 0.3s;
+}
+#product-form .form-group input:focus,
+#product-form .form-group textarea:focus,
+#product-form .form-group select:focus {
+  outline: none;
+  border-color: #f5a938;
+}
+#product-form .form-group textarea {
+  resize: vertical;
+}
+#product-form button {
+  align-self: start;
+}
+
+/* Lista de productos en admin */
+#products-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+#products-list h3 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.product-admin-card {
+  background: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.product-admin-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.product-admin-card .role-badge {
+  display: inline-block;
+  margin-top: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: 4px;
+}
+.product-admin-card .role-badge.role-natura {
+  background-color: #f47920;
+  color: white;
+}
+.product-admin-card .role-badge.role-avon {
+  background-color: #e5004b;
+  color: white;
+}
+.product-admin-card .role-badge.role-arbell {
+  background-color: #7ac142;
+  color: white;
+}
+
+/* Botones de acción */
+.btn-edit,
+.btn-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: opacity 0.2s;
+}
+.btn-edit:hover,
+.btn-delete:hover {
+  opacity: 0.9;
+}
+
+.btn-cancelar {
+  padding: 10px 20px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+.btn-cancelar:hover {
+  background-color: #5a6268;
+}
+
+.users-page {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.users-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.users-header h2 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 10px;
+}
+.users-header h2 i {
+  color: #f5a938;
+  margin-right: 10px;
+}
+.users-header .users-subtitle {
+  color: #666;
+  font-size: 16px;
+}
+
+.loading-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #888;
+}
+.loading-state i,
+.error-state i {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+.loading-state p,
+.error-state p {
+  font-size: 18px;
+}
+
+.error-state {
+  color: #d33;
+}
+.error-state i {
+  color: #d33;
+}
+
+#users-table-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+  margin: 0 auto;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.users-table thead {
+  background-color: rgba(245, 169, 56, 0.1);
+}
+.users-table thead th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #f5a938;
+}
+.users-table tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s ease;
+}
+.users-table tbody tr:hover {
+  background-color: rgba(245, 169, 56, 0.05);
+}
+.users-table tbody tr:last-child {
+  border-bottom: none;
+}
+.users-table tbody td {
+  padding: 15px;
+  vertical-align: middle;
+}
+.users-table .actions-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.role-selector {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+.role-selector:focus {
+  outline: none;
+  border-color: #f5a938;
+}
+
+.btn-save-role {
+  padding: 8px 16px;
+  background: #f5a938;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.btn-save-role i {
+  font-size: 12px;
+}
+.btn-save-role:hover {
+  background: rgb(238.038277512, 147.1291866029, 11.961722488);
+  transform: translateY(-1px);
+}
+.btn-save-role:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-reset-style {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #fee;
+  color: #d33;
+  border: 1px solid #fcc;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-reset-style i {
+  margin-right: 5px;
+  font-size: 11px;
+}
+.btn-reset-style:hover {
+  background-color: #d33;
+  color: #fff;
+  border-color: #d33;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(221, 51, 51, 0.2);
+}
+.btn-reset-style:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.notification {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: #fff;
+  padding: 15px 20px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 9999;
+  min-width: 300px;
+}
+.notification i {
+  font-size: 20px;
+}
+.notification.success {
+  border-left: 4px solid #28a745;
+}
+.notification.success i {
+  color: #28a745;
+}
+.notification.error {
+  border-left: 4px solid #d33;
+}
+.notification.error i {
+  color: #d33;
+}
+
+/**
+ * PRODUCTS CATALOG - CON ANIDAMIENTO SCSS
+ * 
+ * EXPLICACIÓN:
+ * Anidamos los elementos del catálogo de productos
+ */
+.catalogo {
+  padding: 30px 0;
+  text-align: center;
+}
+
+.productos-contenedor {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  justify-items: center;
+}
+
+.producto {
+  width: 250px;
+  height: 280px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  transition: transform 0.2s ease;
+}
+.producto:hover {
+  transform: scale(1.03);
+}
+.producto p,
+.producto label {
+  color: #333;
+  font-size: 15px;
+}
+
+.img-box {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/**
+ * EJEMPLO DE NESTING AVANZADO:
+ * 
+ * Si tuviéramos diferentes tipos de productos:
+ * 
+ * .producto {
+ *   // estilos base
+ *   
+ *   &.destacado {  // .producto.destacado
+ *     border-color: $primary-color;
+ *     box-shadow: 0 0 10px rgba($primary-color, 0.3);
+ *   }
+ *   
+ *   &.agotado {  // .producto.agotado
+ *     opacity: 0.6;
+ *     
+ *     &::after {  // .producto.agotado::after
+ *       content: "AGOTADO";
+ *       position: absolute;
+ *       // ...
+ *     }
+ *   }
+ * }
+ */
+/**
+ * SHOPPING CART STYLES
+ */
+.cart-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.cart-icon {
+  font-size: 24px;
+  color: #333;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.cart-icon:hover {
+  color: #f5a938;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: #f5a938;
+  color: #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  display: none;
+}
+
+.cart-notification {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background-color: #333;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  opacity: 0;
+  transform: translateX(400px);
+  transition: all 0.3s ease;
+}
+.cart-notification.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.cart-page {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+}
+.cart-page h2 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.cart-empty {
+  text-align: center;
+  padding: 30px 20px;
+  color: #888;
+}
+.cart-empty i {
+  font-size: 30px;
+  margin-bottom: 20px;
+  color: #ddd;
+}
+.cart-empty h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+.cart-empty p {
+  margin-bottom: 20px;
+}
+.cart-empty .btn-continue-shopping {
+  padding: 14px 24px;
+  background: #f5a938;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.cart-empty .btn-continue-shopping i {
+  font-size: 16px;
+  margin-right: 8px;
+  margin-bottom: 0;
+  color: #fff;
+}
+.cart-empty .btn-continue-shopping:hover {
+  background: rgb(238.038277512, 147.1291866029, 11.961722488);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cart-items {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+.cart-item:last-child {
+  border-bottom: none;
+}
+.cart-item-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+.cart-item-info {
+  flex: 1;
+}
+.cart-item-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+.cart-item-brand {
+  font-size: 12px;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.cart-item-price {
+  font-size: 20px;
+  color: #f5a938;
+  font-weight: 700;
+}
+.cart-item-quantity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cart-item-subtotal {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+}
+.cart-item-remove {
+  background: #d33;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.cart-item-remove:hover {
+  background: #a00;
+}
+
+.quantity-btn {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+.quantity-btn:hover {
+  background: #f5a938;
+  color: #fff;
+  border-color: #f5a938;
+}
+
+.quantity-value {
+  min-width: 30px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.cart-summary {
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.cart-summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+.cart-summary-row.total {
+  border-top: 2px solid #eee;
+  padding-top: 15px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #f5a938;
+}
+
+.cart-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+.cart-actions button {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-clear-cart {
+  background: #888;
+  color: #fff;
+}
+.btn-clear-cart:hover {
+  background: #666;
+}
+
+.btn-continue-shopping {
+  background: #f5a938;
+  color: #fff;
+}
+.btn-continue-shopping:hover {
+  background: rgb(238.038277512, 147.1291866029, 11.961722488);
+}
+
+.btn-checkout {
+  background: rgb(36, 153, 32);
+  color: #fff;
+}
+.btn-checkout:hover {
+  background: rgb(26.0756756757, 110.8216216216, 23.1783783784);
+}
+
+.checkout-page {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.checkout-page h2 {
+  text-align: center;
+  color: #000;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+.checkout-page h2 i {
+  margin-right: 0.5rem;
+}
+
+.checkout-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+  .checkout-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.order-summary {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.order-summary h3 {
+  color: #f5a938;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  border-bottom: 2px solid rgba(221, 178, 138, 0.3568627451);
+  padding-bottom: 0.5rem;
+}
+
+.checkout-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+}
+.checkout-item:last-child {
+  border-bottom: none;
+}
+.checkout-item .checkout-item-info {
+  flex: 1;
+}
+.checkout-item .checkout-item-info h4 {
+  color: #333;
+  margin-bottom: 0.25rem;
+  font-size: 1.1rem;
+}
+.checkout-item .checkout-item-info .item-quantity {
+  color: #666;
+  font-size: 0.9rem;
+}
+.checkout-item .checkout-item-price {
+  font-weight: bold;
+  color: #f5a938;
+  font-size: 1.2rem;
+}
+
+.order-totals {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 2px solid rgba(221, 178, 138, 0.3568627451);
+}
+.order-totals .order-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  font-size: 1.1rem;
+}
+.order-totals .order-row.total {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #f5a938;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+.payment-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.payment-section h3 {
+  color: #f5a938;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  border-bottom: 2px solid rgba(221, 178, 138, 0.3568627451);
+  padding-bottom: 0.5rem;
+}
+
+.payment-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+.payment-info i {
+  font-size: 2rem;
+  color: #4a4a4a;
+}
+.payment-info p {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.btn-pay {
+  width: 100%;
+  padding: 1.2rem;
+  background: linear-gradient(135deg, #28a745, rgb(30.1449275362, 125.8550724638, 52));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+.btn-pay i {
+  margin-right: 0.5rem;
+}
+.btn-pay:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+.btn-pay:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-back {
+  width: 100%;
+  padding: 1rem;
+  background: white;
+  color: #f5a938;
+  border: 2px solid #f5a938;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-back i {
+  margin-right: 0.5rem;
+}
+.btn-back:hover {
+  background: #f5a938;
+  color: white;
+}
+
+.payment-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  margin-top: 1rem;
+}
+.payment-loading .spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #f5a938;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+.payment-loading p {
+  color: #f5a938;
+  font-weight: 600;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.payment-error {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  margin-top: 1rem;
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  color: #c33;
+}
+.payment-error i {
+  font-size: 1.5rem;
+}
+.payment-error p {
+  margin: 0;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+.empty-state i {
+  font-size: 5rem;
+  color: #ddd;
+  margin-bottom: 1rem;
+}
+.empty-state h3 {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+.empty-state p {
+  color: #666;
+  margin-bottom: 2rem;
+}
+.empty-state .btn-continue-shopping {
+  padding: 1rem 2rem;
+  background: #f5a938;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.empty-state .btn-continue-shopping i {
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+.empty-state .btn-continue-shopping:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(245, 169, 56, 0.3);
+}
+
+.payment-result-page {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.result-container {
+  max-width: 600px;
+  width: 100%;
+  background: white;
+  padding: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.result-container .result-icon {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+}
+.result-container .result-icon i {
+  animation: scaleIn 0.5s ease;
+}
+.result-container.success .result-icon i {
+  color: #28a745;
+}
+.result-container.failure .result-icon i {
+  color: #dc3545;
+}
+.result-container h2 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+.result-container .result-message {
+  color: #666;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+.result-container .result-details {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+.result-container .result-details p {
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+.result-container .result-details ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+  color: #666;
+}
+.result-container .result-details ul li {
+  margin-bottom: 0.5rem;
+}
+.result-container .result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.result-container .result-actions button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.result-container .result-actions button i {
+  margin-right: 0.5rem;
+}
+.result-container .result-actions button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.result-container .result-actions .btn-primary {
+  background: #f5a938;
+  color: white;
+}
+.result-container .result-actions .btn-secondary {
+  background: white;
+  color: #f5a938;
+  border: 2px solid #f5a938;
+}
+.result-container .result-actions .btn-tertiary {
+  background: #6c757d;
+  color: white;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+/**
+ * BRAND THEMES - Estilos específicos por marca
+ * 
+ * Cada marca tiene sus propios colores y estilos
+ * que se aplican cuando el main tiene la clase correspondiente
+ */
+.main-natura .banner {
+  border-color: #f47920;
+  box-shadow: 0 2px 8px rgba(244, 121, 32, 0.15);
+}
+.main-natura .img-box {
+  background-color: rgba(244, 121, 32, 0.15);
+}
+.main-natura .btn-enviar,
+.main-natura .add-to-cart-checkbox:checked + label {
+  background-color: #f47920;
+}
+.main-natura .btn-enviar:hover,
+.main-natura .add-to-cart-checkbox:checked + label:hover {
+  background-color: rgb(214.4230769231, 96.1538461538, 10.5769230769);
+}
+
+.main-avon .banner {
+  border-color: #e5004b;
+  box-shadow: 0 2px 8px rgba(229, 0, 75, 0.15);
+}
+.main-avon .img-box {
+  background-color: rgba(229, 0, 75, 0.15);
+}
+.main-avon .btn-enviar,
+.main-avon .add-to-cart-checkbox:checked + label {
+  background-color: #e5004b;
+}
+.main-avon .btn-enviar:hover,
+.main-avon .add-to-cart-checkbox:checked + label:hover {
+  background-color: rgb(178, 0, 58.2969432314);
+}
+
+.main-arbell .banner {
+  border-color: #4288c1;
+  box-shadow: 0 2px 8px rgba(66, 136, 193, 0.15);
+}
+.main-arbell .img-box {
+  background-color: rgba(66, 136, 193, 0.15);
+}
+.main-arbell .btn-enviar,
+.main-arbell .add-to-cart-checkbox:checked + label {
+  background-color: #4288c1;
+}
+.main-arbell .btn-enviar:hover,
+.main-arbell .add-to-cart-checkbox:checked + label:hover {
+  background-color: rgb(51.3784860558, 109.3864541833, 156.6215139442);
+}
+
+/**
+ * EJEMPLO DE USO:
+ * 
+ * En natura.html: <main class="main-natura">
+ * En avon.html: <main class="main-avon">
+ * En arbell.html: <main class="main-arbell">
+ * 
+ * Esto aplicará automáticamente:
+ * - Colores del banner según la marca
+ * - Background de las cajas de imágenes de productos (img-box) con el color de la marca
+ * - Botones con el color de la marca
+ */
+.img-box.brand-natura {
+  background-color: rgba(244, 121, 32, 0.15);
+}
+
+.img-box.brand-avon {
+  background-color: rgba(229, 0, 75, 0.15);
+}
+
+.img-box.brand-arbell {
+  background-color: rgba(66, 136, 193, 0.15);
+}
+
+/**
+ * FILTERS SIDEBAR - Estilos para el panel de filtros
+ */
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.filters-sidebar {
+  position: sticky;
+  top: 20px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.filters-sidebar h3 {
+  font-size: 17px;
+  color: #333;
+  margin-bottom: 15px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #ccc;
+}
+.filters-sidebar h3 i {
+  margin-right: 6px;
+  color: #f5a938;
+}
+
+.filter-group {
+  margin-bottom: 20px;
+}
+.filter-group h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.filter-group h4 i {
+  font-size: 14px;
+  color: #f5a938;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.filter-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+.filter-options label:hover {
+  background-color: rgba(245, 169, 56, 0.05);
+}
+.filter-options label input[type=checkbox],
+.filter-options label input[type=radio] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+.filter-options label span {
+  font-size: 14px;
+  color: #333;
+}
+
+.price-range {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.price-range .price-inputs {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 6px;
+  align-items: center;
+}
+.price-range .price-inputs input {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+}
+.price-range .price-inputs input:focus {
+  outline: none;
+  border-color: #f5a938;
+}
+.price-range .price-inputs span {
+  color: #333;
+  font-size: 14px;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #ccc;
+}
+.filter-actions button {
+  flex: 1;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.filter-actions button.apply-filters {
+  background-color: #f5a938;
+  color: #fff;
+}
+.filter-actions button.apply-filters:hover {
+  background-color: rgb(238.038277512, 147.1291866029, 11.961722488);
+}
+.filter-actions button.clear-filters {
+  background-color: #f9f9f9;
+  color: #333;
+}
+.filter-actions button.clear-filters:hover {
+  background-color: rgb(236.25, 236.25, 236.25);
+}
+
+@media (max-width: 768px) {
+  .catalog-layout {
+    grid-template-columns: 1fr;
+  }
+  .filters-sidebar {
+    position: relative;
+    top: 0;
+  }
+}
+/**
+ * RESPONSIVE DESIGN - CON ANIDAMIENTO SCSS
+ * 
+ * EXPLICACIÓN:
+ * En responsive, el anidamiento es especialmente útil
+ * porque podemos agrupar todos los cambios de un elemento
+ * dentro de su media query
+ */
+@media (max-width: 991px) {
+  header {
+    position: relative;
+  }
+  .hamburguesa {
+    display: block !important;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+  }
+  .top-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 50px 10px 10px;
+  }
+  .logo {
+    order: 1;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+  }
+  .logo img {
+    margin-bottom: 0;
+  }
+  .logo h1 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    margin-left: 0;
+  }
+  .search-container {
+    order: 2;
+    width: 100%;
+    max-width: 90%;
+    justify-content: center;
+  }
+  .user-container {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .cart-container {
+    position: relative;
+    left: 0;
+    top: 0;
+  }
+  .productos-contenedor {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    padding: 0 10px;
+  }
+  .producto {
+    width: 100%;
+    height: auto;
+  }
+  nav {
+    width: 100%;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    background-color: #ddb28a;
+    border-top: 1px solid #ccc;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+  nav.active {
+    display: flex;
+  }
+  nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    padding: 20px 0;
+  }
+  nav ul li {
+    width: 100%;
+    text-align: center;
+  }
+  nav ul li a {
+    font-size: 20px;
+    display: block;
+    padding: 10px;
+    color: #333;
+  }
+  nav ul li a:hover {
+    background-color: #f5a938;
+    color: #fff;
+  }
+  .cart-page {
+    padding: 10px;
+    margin: 10px auto;
+  }
+  .cart-page h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  .cart-empty {
+    padding: 40px 10px;
+  }
+  .cart-empty i {
+    font-size: 48px;
+  }
+  .cart-empty h3 {
+    font-size: 18px;
+  }
+  .cart-empty p {
+    font-size: 14px;
+  }
+  .cart-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    align-items: flex-start;
+  }
+  .cart-item-image {
+    width: 80px;
+    height: 80px;
+    align-self: center;
+  }
+  .cart-item-info {
+    width: 100%;
+    text-align: center;
+  }
+  .cart-item-name {
+    font-size: 16px;
+  }
+  .cart-item-brand {
+    font-size: 11px;
+  }
+  .cart-item-price {
+    font-size: 18px;
+  }
+  .cart-item-quantity {
+    align-self: center;
+    gap: 10px;
+  }
+  .cart-item-subtotal {
+    align-self: center;
+    font-size: 18px;
+  }
+  .cart-item-remove {
+    align-self: center;
+    width: 100%;
+    max-width: 200px;
+    padding: 6px 10px;
+  }
+  .cart-summary {
+    padding: 15px;
+  }
+  .cart-summary-row {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .cart-summary-row.total {
+    font-size: 20px;
+    padding-top: 6px;
+  }
+  .cart-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .cart-actions button {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+  .menu-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+  footer {
+    justify-content: space-between;
+    padding: 10px;
+  }
+  .redes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .redes a {
+    margin: 5px 0;
+  }
+}
+/**
+ * VENTAJA DEL NESTING EN RESPONSIVE:
+ * 
+ * ANTES (sin nesting):
+ * @media (max-width: 991px) {
+ *   nav { ... }
+ *   nav.active { ... }
+ *   nav ul { ... }
+ *   nav ul li { ... }
+ *   nav ul li a { ... }
+ *   nav ul li a:hover { ... }
+ * }
+ * 
+ * AHORA (con nesting):
+ * @media (max-width: 991px) {
+ *   nav {
+ *     ...
+ *     &.active { ... }
+ *     ul {
+ *       ...
+ *       li {
+ *         ...
+ *         a {
+ *           ...
+ *           &:hover { ... }
+ *         }
+ *       }
+ *     }
+ *   }
+ * }
+ * 
+ * BENEFICIOS:
+ * - Estructura clara que refleja el HTML
+ * - Fácil ver qué estilos se aplican en móvil
+ * - Menos repetición de selectores
+ * - Más fácil de mantener
+ */
+
+/*# sourceMappingURL=style.css.map */
