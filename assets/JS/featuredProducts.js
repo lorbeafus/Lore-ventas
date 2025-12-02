@@ -48,6 +48,18 @@ export async function initFeaturedProducts() {
 }
 
 /**
+ * Normaliza las rutas de imágenes del API
+ * El API devuelve rutas como '../assets/img/...' que no funcionan en GitHub Pages
+ * Esta función las convierte a './assets/img/...' que funcionan en ambos entornos
+ */
+function normalizeImagePath(apiImagePath) {
+    // Remover el prefijo '../' de las rutas del API
+    const cleanPath = apiImagePath.replace(/^\.\.\//, '');
+    // Retornar ruta relativa al index.html
+    return `./${cleanPath}`;
+}
+
+/**
  * Renderiza una tarjeta de producto destacado
  */
 function renderFeaturedProduct(product, container) {
@@ -76,7 +88,7 @@ function renderFeaturedProduct(product, container) {
     if (product.brand === 'arbell') brandColorClass = 'brand-arbell';
 
     productCard.innerHTML = `
-        <div class="img-box ${brandColorClass}"><img src="${product.image}" alt="${product.name}"></div>
+        <div class="img-box ${brandColorClass}"><img src="${normalizeImagePath(product.image)}" alt="${product.name}"></div>
         <p>${product.name}</p>
         <p>$${price}</p>
         <label><input type="checkbox" class="add-to-cart-checkbox"> Agregar</label>
