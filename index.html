@@ -46,7 +46,6 @@
                 <li><a href="./pages/natura.html">Natura</a></li>
                 <li><a href="./pages/avon.html">Avon</a></li>
                 <li><a href="./pages/arbell.html">Arbell</a></li>
-                <li><a href="./pages/Contacto.html">Contacto</a></li>
             </ul>
         </nav>
         <i class="fa-solid fa-bars hamburguesa"></i>
@@ -110,18 +109,30 @@
         </div>
     </footer>
     <script src="./assets/JS/menu.js"></script>
+    <script src="./assets/JS/metadata-loader.js" type="module"></script>
+    <script src="./assets/JS/userMenu.js" type="module"></script>
+    <script src="./assets/JS/menu.js"></script>
     <script src="./assets/JS/userMenu.js" type="module"></script>
     <script src="./assets/JS/slider.js"></script>
     <script type="module">
         import { initCartBadge } from './assets/JS/cart.js';
         import { initSearch } from './assets/JS/search.js';
         import { initFeaturedProducts } from './assets/JS/featuredProducts.js';
-        import './assets/JS/productCart.js';
 
-        // Initialize all features
         initCartBadge();
         initSearch();
         initFeaturedProducts();
+
+        import '../assets/JS/productCart.js';
+
+        // Cargar productos y luego inicializar filtros
+        (async () => {
+            await loadProducts('natura');
+            initFilters();
+        })();
+
+        initCartBadge();
+        initSearch();
     </script>
 </body>
 

@@ -1,11 +1,9 @@
 /**
- * DEVELOPER PANEL - Gestión Completa del Sitio
+ * DEVELOPER PANEL - Gestión de Colores y Banners
  * 
  * Panel exclusivo para desarrolladores que permite:
  * - Modificar colores globales del sitio
  * - Gestionar imágenes de banners de marcas
- * - Monitorear estado de la API en tiempo real
- * - Ejecutar scripts de testing
  */
 
 import {
@@ -33,216 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // ========== SIDEBAR TOGGLE (MOBILE) ==========
-    const sidebarToggle = document.getElementById('sidebar-toggle');
-    const sidebar = document.getElementById('dev-sidebar');
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
-
-    if (sidebarToggle && sidebar && sidebarOverlay) {
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            sidebarOverlay.classList.toggle('active');
-        });
-
-        sidebarOverlay.addEventListener('click', () => {
-            sidebar.classList.remove('active');
-            sidebarOverlay.classList.remove('active');
-        });
-    }
-
-    // ========== API STATUS MONITORING ==========
-    let apiCheckInterval;
-
-    async function checkApiStatus() {
-        const startTime = Date.now();
-
-        try {
-            // Check server status
-            const serverResponse = await fetch(`${API_BASE}/api/health`, {
-                method: 'GET',
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-
-            const responseTime = Date.now() - startTime;
-            const serverData = await serverResponse.json();
-
-            // Update Server Status
-            updateStatusCard('server', serverResponse.ok, {
-                status: serverResponse.ok ? 'Online' : 'Offline',
-                lastCheck: new Date().toLocaleTimeString('es-AR')
-            });
-
-            // Update Database Status
-            updateStatusCard('db', serverData.database === 'connected', {
-                status: serverData.database === 'connected' ? 'Conectada' : 'Desconectada',
-                lastCheck: new Date().toLocaleTimeString('es-AR')
-            });
-
-            // Update Response Time
-            updateStatusCard('response', responseTime < 1000, {
-                latency: `${responseTime} ms`,
-                lastCheck: new Date().toLocaleTimeString('es-AR')
-            });
-
-        } catch (error) {
-            console.error('Error checking API status:', error);
-
-            // Mark all as offline
-            updateStatusCard('server', false, {
-                status: 'Error de conexión',
-                lastCheck: new Date().toLocaleTimeString('es-AR')
-            });
-            updateStatusCard('db', false, {
-                status: 'No disponible',
-                lastCheck: new Date().toLocaleTimeString('es-AR')
-            });
-            updateStatusCard('response', false, {
-                latency: 'N/A',
-                lastCheck: new Date().toLocaleTimeString('es-AR')
-            });
-        }
-    }
-
-    function updateStatusCard(type, isOnline, details) {
-        const card = document.getElementById(`${type}-status-card`);
-        const badge = document.getElementById(`${type}-badge`);
-        const detailsDiv = document.getElementById(`${type}-details`);
-
-        if (!card || !badge || !detailsDiv) return;
-
-        // Update card class
-        card.className = `status-card ${isOnline ? 'online' : 'offline'}`;
-
-        // Update badge
-        badge.className = `status-badge ${isOnline ? 'online' : 'offline'}`;
-        badge.innerHTML = isOnline
-            ? '<i class="fa-solid fa-circle-check"></i> Online'
-            : '<i class="fa-solid fa-circle-xmark"></i> Offline';
-
-        // Update details
-        if (type === 'server') {
-            detailsDiv.innerHTML = `
-                <p><strong>Estado:</strong> ${details.status}</p>
-                <p><strong>Última verificación:</strong> ${details.lastCheck}</p>
-            `;
-        } else if (type === 'db') {
-            detailsDiv.innerHTML = `
-                <p><strong>Estado:</strong> ${details.status}</p>
-                <p><strong>Última verificación:</strong> ${details.lastCheck}</p>
-            `;
-        } else if (type === 'response') {
-            detailsDiv.innerHTML = `
-                <p><strong>Latencia:</strong> ${details.latency}</p>
-                <p><strong>Última medición:</strong> ${details.lastCheck}</p>
-            `;
-        }
-    }
-
-    // Initial check and set interval
-    checkApiStatus();
-    apiCheckInterval = setInterval(checkApiStatus, 30000); // Check every 30 seconds
-
-    // ========== TESTING SCRIPTS ==========
-    const testAuthBtn = document.getElementById('test-auth-btn');
-    const testDbBtn = document.getElementById('test-db-btn');
-    const createTestOrderBtn = document.getElementById('create-test-order-btn');
-    const clearCartBtn = document.getElementById('clear-cart-btn');
-    const testResult = document.getElementById('test-result');
-
-    // Test Authentication
-    if (testAuthBtn) {
-        testAuthBtn.addEventListener('click', async () => {
-            await runTest('auth', async () => {
-                const response = await fetch(`${API_BASE}/api/auth/verify`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                const data = await handleApiResponse(response);
-                return {
-                    success: true,
-                    message: `✅ Autenticación válida. Usuario: ${data.user.email}`
-                };
-            });
-        });
-    }
-
-    // Test Database
-    if (testDbBtn) {
-        testDbBtn.addEventListener('click', async () => {
-            await runTest('database', async () => {
-                const response = await fetch(`${API_BASE}/api/health`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                const data = await handleApiResponse(response);
-                return {
-                    success: data.database === 'connected',
-                    message: data.database === 'connected'
-                        ? '✅ Base de datos conectada correctamente'
-                        : '❌ Error de conexión a la base de datos'
-                };
-            });
-        });
-    }
-
-    // Create Test Order
-    if (createTestOrderBtn) {
-        createTestOrderBtn.addEventListener('click', async () => {
-            await runTest('test-order', async () => {
-                const response = await fetch(`${API_BASE}/api/payments/create-test-order`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ items: [] })
-                });
-                const data = await handleApiResponse(response);
-                return {
-                    success: true,
-                    message: `✅ Pedido de prueba creado. ID: ${data.transaction.transactionId}`
-                };
-            });
-        });
-    }
-
-    // Clear Cart
-    if (clearCartBtn) {
-        clearCartBtn.addEventListener('click', async () => {
-            await runTest('clear-cart', async () => {
-                localStorage.removeItem('cart');
-                return {
-                    success: true,
-                    message: '✅ Carrito limpiado correctamente'
-                };
-            });
-        });
-    }
-
-    async function runTest(testName, testFunction) {
-        const btn = event.target.closest('.test-btn');
-        const originalContent = btn.innerHTML;
-
-        try {
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Ejecutando...';
-            testResult.style.display = 'none';
-
-            const result = await testFunction();
-
-            testResult.className = `test-result ${result.success ? 'success' : 'error'}`;
-            testResult.innerHTML = result.message;
-            testResult.style.display = 'block';
-
-        } catch (error) {
-            console.error(`Error in test ${testName}:`, error);
-            testResult.className = 'test-result error';
-            testResult.innerHTML = `❌ Error: ${error.message}`;
-            testResult.style.display = 'block';
-        } finally {
-            btn.disabled = false;
-            btn.innerHTML = originalContent;
-        }
-    }
-
     // ========== GESTIÓN DE COLORES ==========
 
     const colorForm = document.getElementById('color-form');
@@ -256,6 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cargar colores actuales
     loadCurrentColors();
+
+    // Verificar estado de la API
+    checkApiStatus();
 
     // Event listeners para colores
     colorForm.addEventListener('submit', handleColorSubmit);
@@ -470,6 +261,97 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    /**
+     * Verificar estado de la API y Base de Datos
+     */
+    async function checkApiStatus() {
+        const serverBadge = document.getElementById('server-badge');
+        const serverDetails = document.getElementById('server-details');
+        const serverCard = document.getElementById('server-status-card');
+
+        const dbBadge = document.getElementById('db-badge');
+        const dbDetails = document.getElementById('db-details');
+        const dbCard = document.getElementById('db-status-card');
+
+        const responseBadge = document.getElementById('response-badge');
+        const responseDetails = document.getElementById('response-details');
+        const responseCard = document.getElementById('response-status-card');
+
+        const startTime = performance.now();
+
+        try {
+            const response = await fetch(`${API_BASE}/api/health`);
+            const endTime = performance.now();
+            const latency = Math.round(endTime - startTime);
+
+            if (!response.ok) throw new Error('Server error');
+
+            const data = await response.json();
+
+            // Actualizar Server Status
+            serverCard.className = 'status-card success';
+            serverBadge.className = 'status-badge success';
+            serverBadge.innerHTML = '<i class="fa-solid fa-check-circle"></i> Online';
+            serverDetails.innerHTML = `
+                <p><strong>Estado:</strong> Online</p>
+                <p><strong>Uptime:</strong> ${Math.floor(data.uptime / 60)} min</p>
+                <p><strong>Env:</strong> ${data.environment}</p>
+            `;
+
+            // Actualizar DB Status
+            if (data.database === 'connected') {
+                dbCard.className = 'status-card success';
+                dbBadge.className = 'status-badge success';
+                dbBadge.innerHTML = '<i class="fa-solid fa-database"></i> Conectado';
+                dbDetails.innerHTML = `
+                    <p><strong>Estado:</strong> Conectado</p>
+                    <p><strong>Motor:</strong> MongoDB</p>
+                `;
+            } else {
+                throw new Error('Database disconnected');
+            }
+
+            // Actualizar Response Time
+            responseCard.className = 'status-card success';
+            responseBadge.className = 'status-badge success';
+            responseBadge.innerHTML = '<i class="fa-solid fa-bolt"></i> Rápido';
+            responseDetails.innerHTML = `
+                <p><strong>Latencia:</strong> ${latency} ms</p>
+                <p><strong>Última:</strong> ${new Date().toLocaleTimeString()}</p>
+            `;
+
+        } catch (error) {
+            console.error('API Status Error:', error);
+
+            // Error en Server
+            serverCard.className = 'status-card error';
+            serverBadge.className = 'status-badge error';
+            serverBadge.innerHTML = '<i class="fa-solid fa-times-circle"></i> Offline';
+            serverDetails.innerHTML = `
+                <p><strong>Estado:</strong> Error de conexión</p>
+                <p><strong>Error:</strong> ${error.message}</p>
+            `;
+
+            // Error en DB
+            dbCard.className = 'status-card error';
+            dbBadge.className = 'status-badge error';
+            dbBadge.innerHTML = '<i class="fa-solid fa-database"></i> Error';
+            dbDetails.innerHTML = `
+                <p><strong>Estado:</strong> Desconectado</p>
+                <p><strong>Check:</strong> Fallido</p>
+            `;
+
+            // Error en Response
+            responseCard.className = 'status-card error';
+            responseBadge.className = 'status-badge error';
+            responseBadge.innerHTML = '<i class="fa-solid fa-exclamation-triangle"></i> Lento';
+            responseDetails.innerHTML = `
+                <p><strong>Latencia:</strong> Timeout</p>
+                <p><strong>Estado:</strong> Sin respuesta</p>
+            `;
+        }
+    }
+
     // ========== UTILIDADES ==========
 
     /**
@@ -498,5 +380,117 @@ document.addEventListener('DOMContentLoaded', () => {
         const b = parseInt(values[2]).toString(16).padStart(2, '0');
 
         return `#${r}${g}${b}`;
+    }
+
+    // ========== GESTIÓN DE METADATOS DEL SITIO ==========
+
+    const metadataForm = document.getElementById('metadata-form');
+    const faviconUpload = document.getElementById('favicon-upload');
+    const currentFaviconImg = document.getElementById('current-favicon-img');
+
+    // Cargar metadatos actuales
+    if (metadataForm) {
+        loadSiteMetadata();
+        metadataForm.addEventListener('submit', handleMetadataSubmit);
+    }
+
+    /**
+     * Cargar metadatos actuales del sitio
+     */
+    async function loadSiteMetadata() {
+        try {
+            const response = await fetch(`${API_BASE}/api/settings/siteMetadata`);
+            const data = await handleApiResponse(response);
+
+            if (data.value) {
+                const metadata = data.value;
+
+                // Cargar valores de cada página
+                document.getElementById('index-title').value = metadata.index?.title || '';
+                document.getElementById('index-h1').value = metadata.index?.h1 || '';
+                document.getElementById('natura-title').value = metadata.natura?.title || '';
+                document.getElementById('natura-h1').value = metadata.natura?.h1 || '';
+                document.getElementById('avon-title').value = metadata.avon?.title || '';
+                document.getElementById('avon-h1').value = metadata.avon?.h1 || '';
+                document.getElementById('arbell-title').value = metadata.arbell?.title || '';
+                document.getElementById('arbell-h1').value = metadata.arbell?.h1 || '';
+
+                // Mostrar favicon actual
+                if (metadata.favicon) {
+                    currentFaviconImg.src = metadata.favicon;
+                }
+            }
+        } catch (err) {
+            console.error('Error loading site metadata:', err);
+        }
+    }
+
+    /**
+     * Guardar metadatos del sitio
+     */
+    async function handleMetadataSubmit(e) {
+        e.preventDefault();
+
+        try {
+            let faviconPath = currentFaviconImg.src;
+
+            // Si hay un nuevo favicon, subirlo primero
+            if (faviconUpload.files.length > 0) {
+                const formData = new FormData();
+                formData.append('image', faviconUpload.files[0]);
+
+                const uploadResponse = await fetch(`${API_BASE}/api/uploads`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const uploadData = await handleApiResponse(uploadResponse);
+                faviconPath = uploadData.imagePath;
+            }
+
+            // Construir objeto de metadatos
+            const metadata = {
+                index: {
+                    title: document.getElementById('index-title').value,
+                    h1: document.getElementById('index-h1').value
+                },
+                natura: {
+                    title: document.getElementById('natura-title').value,
+                    h1: document.getElementById('natura-h1').value
+                },
+                avon: {
+                    title: document.getElementById('avon-title').value,
+                    h1: document.getElementById('avon-h1').value
+                },
+                arbell: {
+                    title: document.getElementById('arbell-title').value,
+                    h1: document.getElementById('arbell-h1').value
+                },
+                favicon: faviconPath
+            };
+
+            // Guardar metadatos
+            const response = await fetch(`${API_BASE}/api/settings/siteMetadata`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ value: metadata })
+            });
+
+            await handleApiResponse(response);
+
+            alert('✅ Metadatos actualizados exitosamente. Los cambios se aplicarán en las páginas.');
+
+            // Recargar metadatos
+            loadSiteMetadata();
+        } catch (err) {
+            console.error('Error saving metadata:', err);
+            alert(`❌ Error al guardar metadatos: ${err.message}`);
+        }
     }
 });
