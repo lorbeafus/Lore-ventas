@@ -117,20 +117,10 @@
         import { initSearch } from './assets/JS/search.js';
         import { initFeaturedProducts } from './assets/JS/featuredProducts.js';
 
+        // Initialize all features
         initCartBadge();
         initSearch();
         initFeaturedProducts();
-
-        import '../assets/JS/productCart.js';
-
-        // Cargar productos y luego inicializar filtros
-        (async () => {
-            await loadProducts('natura');
-            initFilters();
-        })();
-
-        initCartBadge();
-        initSearch();
     </script>
 </body>
 
