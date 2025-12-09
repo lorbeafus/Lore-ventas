@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "sass:build": "sass scss/Style.scss assets/CSS/style.css --no-source-map",
-    "sass:watch": "sass scss/Style.scss assets/CSS/style.css --watch --no-source-map"
+    "sass:build": "sass scss/Style.scss assets/css/style.css --no-source-map",
+    "sass:watch": "sass scss/Style.scss assets/css/style.css --watch --no-source-map"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

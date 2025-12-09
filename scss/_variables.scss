@@ -50,8 +50,128 @@ $transition-slow: 0.8s ease-in-out;
 $breakpoint-mobile: 991px;
 $breakpoint-tablet: 768px;
 
-// ========== ROLE BADGES (NUEVO) ==========
+// ========== ROLE BADGES ==========
 // Colores para los badges de roles de usuario
 $role-user-color: #6c757d; // Gris para usuario regular
 $role-admin-color: #28a745; // Verde para administrador
 $role-developer-color: #007bff; // Azul para desarrollador
+
+// ============================================================
+// ==================== SCSS MAPS =============================
+// ============================================================
+
+// ========== COLORS MAP ==========
+// Agrupa todos los colores del tema
+$colors: (
+    'primary': $primary-color,
+    'primary-hover': $primary-hover,
+    'secondary': $secondary-color,
+    'text': $text-color,
+    'text-light': $text-light,
+    'text-muted': $text-muted,
+    'error': $error-color,
+    'white': $white,
+    'border': $border-color,
+    'border-light': $border-light,
+    'bg-light': $background-light,
+    'bg-gray': $background-gray,
+    'bg-disabled': $background-disabled
+);
+
+// ========== FONT SIZES MAP ==========
+// Escala tipográfica del proyecto
+$font-sizes: (
+    'small': $font-size-small,
+    'base': $font-size-base,
+    'large': $font-size-large,
+    'xlarge': $font-size-xlarge,
+    'xxlarge': $font-size-xxlarge,
+    'xxxlarge': $font-size-xxxlarge,
+    'huge': $font-size-huge
+);
+
+// ========== SPACING MAP ==========
+// Sistema de espaciado consistente
+$spacings: (
+    'xs': $spacing-xs,
+    'sm': $spacing-sm,
+    'md': $spacing-md,
+    'lg': $spacing-lg,
+    'xl': $spacing-xl,
+    'xxl': $spacing-xxl,
+    'xxxl': $spacing-xxxl
+);
+
+// ========== BORDER RADIUS MAP ==========
+$border-radii: (
+    'sm': $border-radius-sm,
+    'md': $border-radius-md,
+    'lg': $border-radius-lg,
+    'xl': $border-radius-xl,
+    'round': $border-radius-round
+);
+
+// ========== BREAKPOINTS MAP ==========
+// Puntos de quiebre para responsive design
+$breakpoints: (
+    'mobile': $breakpoint-mobile,
+    'tablet': $breakpoint-tablet,
+    'desktop': 1200px
+);
+
+// ========== TRANSITIONS MAP ==========
+$transitions: (
+    'fast': $transition-fast,
+    'normal': $transition-normal,
+    'slow': $transition-slow
+);
+
+// ========== BRAND COLORS MAP ==========
+// Colores específicos para cada marca
+$brand-colors: (
+    'natura': #febd4c,
+    'avon': #e91e8c,
+    'arbell': #0093a6
+);
+
+// ========== USER ROLES MAP ==========
+// Colores para los badges de roles
+$role-colors: (
+    'user': $role-user-color,
+    'admin': $role-admin-color,
+    'developer': $role-developer-color
+);
+
+// ============================================================
+// ==================== FUNCIONES HELPER ======================
+// ============================================================
+
+// Función para obtener color del map
+// Uso: color('primary')
+@function color($key) {
+    @return map-get($colors, $key);
+}
+
+// Función para obtener tamaño de fuente
+// Uso: font-size('large')
+@function font-size($key) {
+    @return map-get($font-sizes, $key);
+}
+
+// Función para obtener espaciado
+// Uso: spacing('md')
+@function spacing($key) {
+    @return map-get($spacings, $key);
+}
+
+// Función para obtener color de marca
+// Uso: brand('natura')
+@function brand($key) {
+    @return map-get($brand-colors, $key);
+}
+
+// Función para obtener breakpoint
+// Uso: breakpoint('mobile')
+@function breakpoint($key) {
+    @return map-get($breakpoints, $key);
+}
