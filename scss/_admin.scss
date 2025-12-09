@@ -126,16 +126,13 @@
 }
 
 .btn-cancelar {
+    @extend %button-base;
     padding: 10px 20px;
     background-color: #6c757d;
     color: white;
-    border: none;
     border-radius: 25px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s;
 
-    &:hover {
+    &:hover:not(:disabled) {
         background-color: #5a6268;
     }
 }
@@ -267,15 +264,12 @@
 
 // Save role button
 .btn-save-role {
+    @extend %button-base;
     padding: 8px 16px;
     background: $primary-color;
     color: $white;
-    border: none;
     border-radius: $border-radius-sm;
     font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all $transition-normal;
     display: inline-flex;
     align-items: center;
     gap: 5px;
@@ -284,14 +278,9 @@
         font-size: 12px;
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
         background: darken($primary-color, 10%);
         transform: translateY(-1px);
-    }
-
-    &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
     }
 }
 

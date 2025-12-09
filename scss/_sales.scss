@@ -167,23 +167,21 @@
     }
 
     .btn-refresh {
+        @extend %button-base;
         margin-left: auto;
         padding: 8px 16px;
         background: $primary-color;
         color: $white;
-        border: none;
         border-radius: $border-radius-sm;
         font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all $transition-normal;
 
         i {
             margin-right: 5px;
         }
 
-        &:hover {
+        &:hover:not(:disabled) {
             background: darken($primary-color, 10%);
+            transform: translateY(-2px);
         }
     }
 }
@@ -292,21 +290,18 @@
 
 // ========== ACTION BUTTONS ==========
 .btn-view {
+    @extend %button-base;
     padding: 6px 12px;
     background: $primary-color;
     color: $white;
-    border: none;
     border-radius: $border-radius-sm;
     font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all $transition-normal;
 
     i {
         margin-right: 5px;
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
         background: darken($primary-color, 10%);
         transform: translateY(-1px);
     }
