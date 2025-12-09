@@ -272,28 +272,33 @@
 }
 
 .btn-clear-cart {
+    @extend %button-base;
     background: #888;
     color: $white;
 
-    &:hover {
+    &:hover:not(:disabled) {
         background: #666;
     }
 }
 
 .btn-continue-shopping {
+    @extend %button-base;
     background: $primary-color;
     color: $white;
 
-    &:hover {
+    &:hover:not(:disabled) {
         background: darken($primary-color, 10%);
+        transform: translateY(-2px);
     }
 }
 
 .btn-checkout {
+    @extend %button-base;
     background: rgb(36, 153, 32);
     color: $white;
 
-    &:hover {
+    &:hover:not(:disabled) {
         background: darken(rgb(36, 153, 32), 10%);
+        transform: translateY(-2px);
     }
 }

@@ -45,14 +45,13 @@
 
 // ========== BUTTONS ==========
 .btn-enviar {
-    @include button-base;
+    @extend %button-base;
     background-color: $primary-color;
     color: $white;
 
-    // EXPLICACIÓN: & = .btn-enviar
-    // Esto genera: .btn-enviar:hover { ... }
-    &:hover {
+    &:hover:not(:disabled) {
         background-color: $primary-hover;
+        transform: translateY(-2px);
     }
 
     // EXPLICACIÓN: Si tuviéramos un estado disabled
@@ -63,11 +62,11 @@
 }
 
 .btn-cancelar {
-    @include button-base;
+    @extend %button-base;
     background-color: $text-muted;
     color: $white;
 
-    &:hover {
+    &:hover:not(:disabled) {
         background-color: #666;
     }
 }

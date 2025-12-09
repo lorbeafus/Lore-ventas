@@ -1,0 +1,198 @@
+// ============================================================
+// ==================== SCSS EXTENDS/PLACEHOLDERS =============
+// ============================================================
+// Los placeholders (%) son estilos base que pueden ser heredados
+// usando @extend. No se compilan a CSS si no se usan.
+
+// ========== BOTONES ==========
+// Base para todos los botones
+%button-base {
+    padding: 12px 30px;
+    border: none;
+    border-radius: $border-radius-md;
+    font-size: $font-size-large;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all $transition-fast;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+// Botón primario (naranja)
+.btn-primary {
+    @extend %button-base;
+    background: $primary-color;
+    color: $white;
+
+    &:hover:not(:disabled) {
+        background: $primary-hover;
+        transform: translateY(-2px);
+    }
+}
+
+// Botón secundario (outline)
+.btn-secondary {
+    @extend %button-base;
+    background: transparent;
+    border: 2px solid $primary-color;
+    color: $primary-color;
+
+    &:hover:not(:disabled) {
+        background: $primary-color;
+        color: $white;
+    }
+}
+
+// Botón de peligro (rojo)
+.btn-danger {
+    @extend %button-base;
+    background: $error-color;
+    color: $white;
+
+    &:hover:not(:disabled) {
+        background: darken($error-color, 10%);
+    }
+}
+
+// Botón de éxito (verde)
+.btn-success {
+    @extend %button-base;
+    background: #28a745;
+    color: $white;
+
+    &:hover:not(:disabled) {
+        background: darken(#28a745, 10%);
+    }
+}
+
+// Botón pequeño
+.btn-sm {
+    padding: 8px 16px;
+    font-size: $font-size-small;
+}
+
+// Botón grande
+.btn-lg {
+    padding: 16px 40px;
+    font-size: $font-size-xlarge;
+}
+
+// ========== TARJETAS DE PRODUCTO ==========
+// Base para todas las tarjetas de producto
+%product-card-base {
+    width: 250px;
+    min-height: 280px;
+    border: 1px solid $border-color;
+    border-radius: $border-radius-lg;
+    background: $background-gray;
+    @include box-shadow;
+    @include flex-column;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-lg;
+    transition: transform $transition-fast, box-shadow $transition-fast;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+        transform: scale(1.03);
+        @include box-shadow-large;
+    }
+
+    p,
+    label {
+        color: $text-color;
+        font-size: $font-size-base;
+    }
+}
+
+// Tarjeta de producto Natura
+.producto-natura {
+    @extend %product-card-base;
+    border-top: 4px solid map-get($brand-colors, 'natura');
+
+    .img-box {
+        background: linear-gradient(135deg, rgba(254, 189, 76, 0.1), transparent);
+    }
+}
+
+// Tarjeta de producto Avon
+.producto-avon {
+    @extend %product-card-base;
+    border-top: 4px solid map-get($brand-colors, 'avon');
+
+    .img-box {
+        background: linear-gradient(135deg, rgba(233, 30, 140, 0.1), transparent);
+    }
+}
+
+// Tarjeta de producto Arbell
+.producto-arbell {
+    @extend %product-card-base;
+    border-top: 4px solid map-get($brand-colors, 'arbell');
+
+    .img-box {
+        background: linear-gradient(135deg, rgba(0, 147, 166, 0.1), transparent);
+    }
+}
+
+// ========== TARJETAS GENÉRICAS ==========
+// Base para tarjetas/cards en general
+%card-base {
+    background: $white;
+    border-radius: $border-radius-lg;
+    padding: $spacing-xl;
+    @include box-shadow;
+    transition: box-shadow $transition-fast;
+
+    &:hover {
+        @include box-shadow-large;
+    }
+}
+
+// Card simple
+.card {
+    @extend %card-base;
+}
+
+// Card con borde
+.card-bordered {
+    @extend %card-base;
+    border: 1px solid $border-light;
+}
+
+// ========== BADGES ==========
+// Base para badges/etiquetas
+%badge-base {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: $font-size-small;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+// Badge por marca
+.badge-natura {
+    @extend %badge-base;
+    background: map-get($brand-colors, 'natura');
+    color: $white;
+}
+
+.badge-avon {
+    @extend %badge-base;
+    background: map-get($brand-colors, 'avon');
+    color: $white;
+}
+
+.badge-arbell {
+    @extend %badge-base;
+    background: map-get($brand-colors, 'arbell');
+    color: $white;
+}
