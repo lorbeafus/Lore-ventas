@@ -13,6 +13,7 @@ const paymentRoutes = require('./routes/payments');
 const transactionRoutes = require('./routes/transactions');
 const settingsRoutes = require('./routes/settings');
 const healthRoutes = require('./routes/health');
+const ordersRoutes = require('./routes/orders');
 
 const app = express();
 app.use(cors());
@@ -44,6 +45,7 @@ app.use('/api/users', usersRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/settings', settingsRoutes);
+app.use('/api/orders', ordersRoutes);
 
 app.get('/', (req, res) => res.json({ ok: true }));
 

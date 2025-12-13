@@ -213,13 +213,13 @@ function displayTransactions(transactions) {
 
         return `
             <tr>
-                <td><code>${transaction.transactionId.substring(0, 12)}...</code></td>
-                <td>${date}</td>
-                <td>${customerEmail}</td>
-                <td>${itemsText}</td>
-                <td><strong>$${transaction.amount.toFixed(2)}</strong></td>
-                <td><span class="status-badge ${transaction.status}">${getStatusText(transaction.status)}</span></td>
-                <td>
+                <td data-label="ID"><code>${transaction.transactionId.substring(0, 12)}...</code></td>
+                <td data-label="Fecha">${date}</td>
+                <td data-label="Cliente">${customerEmail}</td>
+                <td data-label="Productos">${itemsText}</td>
+                <td data-label="Monto"><strong>$${transaction.amount.toFixed(2)}</strong></td>
+                <td data-label="Estado"><span class="status-badge ${transaction.status}">${getStatusText(transaction.status)}</span></td>
+                <td data-label="Acciones">
                     <div class="action-buttons">
                         <button class="btn-action btn-view" onclick="viewTransaction('${transaction._id}')">
                             <i class="fa-solid fa-eye"></i> Ver

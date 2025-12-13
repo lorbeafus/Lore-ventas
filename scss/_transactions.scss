@@ -201,17 +201,112 @@
         grid-template-columns: 1fr;
     }
 
-    .transactions-table {
-        font-size: 12px;
+    .transactions-table-container {
+        overflow-x: visible;
+    }
 
-        th,
+    .transactions-table {
+        display: block;
+
+        thead {
+            display: none; // Ocultar encabezados en móvil
+        }
+
+        tbody {
+            display: block;
+        }
+
+        tr {
+            display: block;
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            border-left: 4px solid #667eea;
+        }
+
         td {
-            padding: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            // Mostrar label antes del contenido
+            &::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #667eea;
+                flex-shrink: 0;
+                margin-right: 15px;
+                min-width: 80px;
+            }
+        }
+
+        .action-buttons {
+            justify-content: flex-end;
+            width: 100%;
         }
     }
 
     .detail-row {
         grid-template-columns: 1fr;
         gap: 5px;
+    }
+
+    .status-update-form {
+        flex-direction: column;
+
+        select,
+        input,
+        button {
+            width: 100%;
+        }
+    }
+}
+
+// Extra small devices
+@media (max-width: 480px) {
+    .transactions-page {
+        padding: 10px;
+
+        h2 {
+            font-size: 1.3rem;
+        }
+    }
+
+    .stat-card {
+        padding: 15px;
+
+        .stat-value {
+            font-size: 24px;
+        }
+    }
+
+    .transactions-table td {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+
+        &::before {
+            margin-right: 0;
+            margin-bottom: 3px;
+        }
+    }
+
+    .action-buttons {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .btn-action {
+        flex: 1;
+        text-align: center;
     }
 }

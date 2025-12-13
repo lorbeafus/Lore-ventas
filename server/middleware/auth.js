@@ -96,4 +96,25 @@ function verifyToken(req, res, next) {
  * });
  */
 
-module.exports = { verifyToken };
+/**
+ * Middleware para verificar si el usuario es admin o developer
+ * Debe usarse DESPUÉS de verifyToken/authenticateToken
+ */
+function isAdminOrDeveloper(req, res, next) {
+    if (!req.user) {
+        return res.status(401).json({ message: 'Not authenticated' });
+    }
+
+    const role = req.user.role;
+    if (role !== 'admin' && role !== 'developer') {
+        return res.status(403).json({ message: 'Access denied. Admin or developer role required.' });
+    }
+
+    next();
+}
+
+module.exports = { 
+    verifyToken, 
+    authenticateToken: verifyToken,  // Alias para compatibilidad
+    isAdminOrDeveloper 
+};

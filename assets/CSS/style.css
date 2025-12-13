@@ -1691,55 +1691,67 @@ main {
 /**
  * BRAND THEMES - Estilos específicos por marca
  * 
- * Cada marca tiene sus propios colores y estilos
- * que se aplican cuando el main tiene la clase correspondiente
+ * REFACTORIZADO: Usando SCSS Maps y @each para generar
+ * automáticamente los estilos de cada marca
  */
 .main-natura .banner {
-  border-color: #f47920;
-  box-shadow: 0 2px 8px rgba(244, 121, 32, 0.15);
+  border-color: #febd4c;
+  box-shadow: 0 2px 8px rgba(254, 189, 76, 0.15);
 }
 .main-natura .img-box {
-  background-color: rgba(244, 121, 32, 0.15);
+  background-color: rgba(254, 189, 76, 0.15);
 }
 .main-natura .btn-enviar,
 .main-natura .add-to-cart-checkbox:checked + label {
-  background-color: #f47920;
+  background-color: #febd4c;
 }
 .main-natura .btn-enviar:hover,
 .main-natura .add-to-cart-checkbox:checked + label:hover {
-  background-color: rgb(214.4230769231, 96.1538461538, 10.5769230769);
+  background-color: rgb(253.7166666667, 170.3, 25.2833333333);
 }
 
 .main-avon .banner {
-  border-color: #e5004b;
-  box-shadow: 0 2px 8px rgba(229, 0, 75, 0.15);
+  border-color: #e91e8c;
+  box-shadow: 0 2px 8px rgba(233, 30, 140, 0.15);
 }
 .main-avon .img-box {
-  background-color: rgba(229, 0, 75, 0.15);
+  background-color: rgba(233, 30, 140, 0.15);
 }
 .main-avon .btn-enviar,
 .main-avon .add-to-cart-checkbox:checked + label {
-  background-color: #e5004b;
+  background-color: #e91e8c;
 }
 .main-avon .btn-enviar:hover,
 .main-avon .add-to-cart-checkbox:checked + label:hover {
-  background-color: rgb(178, 0, 58.2969432314);
+  background-color: rgb(193.1174089069, 18.8825910931, 113.2955465587);
 }
 
 .main-arbell .banner {
-  border-color: #4288c1;
-  box-shadow: 0 2px 8px rgba(66, 136, 193, 0.15);
+  border-color: #0093a6;
+  box-shadow: 0 2px 8px rgba(0, 147, 166, 0.15);
 }
 .main-arbell .img-box {
-  background-color: rgba(66, 136, 193, 0.15);
+  background-color: rgba(0, 147, 166, 0.15);
 }
 .main-arbell .btn-enviar,
 .main-arbell .add-to-cart-checkbox:checked + label {
-  background-color: #4288c1;
+  background-color: #0093a6;
 }
 .main-arbell .btn-enviar:hover,
 .main-arbell .add-to-cart-checkbox:checked + label:hover {
-  background-color: rgb(51.3784860558, 109.3864541833, 156.6215139442);
+  background-color: rgb(0, 101.8373493976, 115);
+}
+
+.img-box.brand-natura {
+  background-color: rgba(254, 189, 76, 0.15);
+}
+
+.img-box.brand-avon {
+  background-color: rgba(233, 30, 140, 0.15);
+}
+
+.img-box.brand-arbell {
+  background-color: rgba(0, 147, 166, 0.15);
 }
 
 /**
@@ -1751,21 +1763,14 @@ main {
  * 
  * Esto aplicará automáticamente:
  * - Colores del banner según la marca
- * - Background de las cajas de imágenes de productos (img-box) con el color de la marca
+ * - Background de las cajas de imágenes de productos (img-box)
  * - Botones con el color de la marca
+ * 
+ * VENTAJA DEL @each:
+ * - Código más corto y mantenible
+ * - Agregar una nueva marca solo requiere añadirla al map
+ * - Todos los estilos se actualizan automáticamente
  */
-.img-box.brand-natura {
-  background-color: rgba(244, 121, 32, 0.15);
-}
-
-.img-box.brand-avon {
-  background-color: rgba(229, 0, 75, 0.15);
-}
-
-.img-box.brand-arbell {
-  background-color: rgba(66, 136, 193, 0.15);
-}
-
 /**
  * FILTERS SIDEBAR - Estilos para el panel de filtros
  */
@@ -2834,16 +2839,92 @@ main {
   .filters-grid {
     grid-template-columns: 1fr;
   }
-  .transactions-table {
-    font-size: 12px;
+  .transactions-table-container {
+    overflow-x: visible;
   }
-  .transactions-table th,
+  .transactions-table {
+    display: block;
+  }
+  .transactions-table thead {
+    display: none;
+  }
+  .transactions-table tbody {
+    display: block;
+  }
+  .transactions-table tr {
+    display: block;
+    background: white;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-left: 4px solid #667eea;
+  }
   .transactions-table td {
-    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+  }
+  .transactions-table td:last-child {
+    border-bottom: none;
+  }
+  .transactions-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #667eea;
+    flex-shrink: 0;
+    margin-right: 15px;
+    min-width: 80px;
+  }
+  .transactions-table .action-buttons {
+    justify-content: flex-end;
+    width: 100%;
   }
   .detail-row {
     grid-template-columns: 1fr;
     gap: 5px;
+  }
+  .status-update-form {
+    flex-direction: column;
+  }
+  .status-update-form select,
+  .status-update-form input,
+  .status-update-form button {
+    width: 100%;
+  }
+}
+@media (max-width: 480px) {
+  .transactions-page {
+    padding: 10px;
+  }
+  .transactions-page h2 {
+    font-size: 1.3rem;
+  }
+  .stat-card {
+    padding: 15px;
+  }
+  .stat-card .stat-value {
+    font-size: 24px;
+  }
+  .transactions-table td {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  .transactions-table td::before {
+    margin-right: 0;
+    margin-bottom: 3px;
+  }
+  .action-buttons {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .btn-action {
+    flex: 1;
+    text-align: center;
   }
 }
 /**
@@ -3343,3 +3424,5 @@ main {
  * - Menos repetición de selectores
  * - Más fácil de mantener
  */
+
+/*# sourceMappingURL=style.css.map */

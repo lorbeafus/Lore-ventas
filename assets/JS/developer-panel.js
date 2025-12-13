@@ -31,6 +31,42 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    // ========== SIDEBAR TOGGLE (MOBILE) ==========
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const devSidebar = document.getElementById('dev-sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+    if (sidebarToggle && devSidebar) {
+        // Abrir/cerrar sidebar al hacer clic en el botón hamburguesa
+        sidebarToggle.addEventListener('click', () => {
+            devSidebar.classList.toggle('active');
+            if (sidebarOverlay) {
+                sidebarOverlay.classList.toggle('active');
+            }
+        });
+
+        // Cerrar sidebar al hacer clic en el overlay
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', () => {
+                devSidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            });
+        }
+
+        // Cerrar sidebar al hacer clic en un enlace (móvil)
+        const sidebarLinks = devSidebar.querySelectorAll('.sidebar-links a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    devSidebar.classList.remove('active');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.remove('active');
+                    }
+                }
+            });
+        });
+    }
+
     // ========== GESTIÓN DE COLORES ==========
 
     const colorForm = document.getElementById('color-form');
