@@ -1,7 +1,7 @@
 import { initCartBadge } from './cart.js';
 import { initSearch } from './search.js';
-import { initFeaturedProducts } from './featuredProducts.js';
+// featuredProducts ya no es necesario - productos hardcodeados en HTML
 
 initCartBadge();
 initSearch();
-initFeaturedProducts();
+// initFeaturedProducts() - Ya no necesario, productos hardcodeados

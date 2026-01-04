@@ -68,7 +68,7 @@ function createProductCard(product) {
 
     card.innerHTML = `
     <div class="img-box">
-      <img src="${product.image}" alt="${product.name}" onerror="this.src='../assets/img/placeholder.png'">
+      <img src="${product.image}" alt="${product.name}" onerror="this.src='../assets/img/placeholder.webp'">
     </div>
     <p>${product.name}</p>
     <p class="product-brand">${product.brand.toUpperCase()}</p>

@@ -10,7 +10,9 @@
     <meta name="author" content="Lorena Fusillo">
     <!-- Enlace a Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Enlace al archivo CSS -->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlace al archivo CSS (después de Bootstrap para que pueda sobrescribir estilos) -->
     <link rel="stylesheet" href="./assets/css/style.css">
     <!--Titulo-->
     <title>Lore Ventas - Página Principal</title>
@@ -21,7 +23,7 @@
         <!--top-bar-->
         <div class="top-bar">
             <div class="logo">
-                <img src="./assets/img/Logo.png" width="150" alt="Logo Lore">
+                <img src="./assets/img/Logo.webp" width="150" alt="Logo Lore">
                 <h1>Lorena Fusillo <br>Cosmetica</h1>
             </div>
             <div class="search-container">
@@ -33,11 +35,12 @@
                 </form>
             </div>
             <div class="user-container">
-                <div class="user-icon">
+                <div class="user-icon" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Mi cuenta">
                     <i class="fa-solid fa-user"></i>
                 </div>
                 <div class="cart-container">
-                    <a href="./pages/cart.html" class="cart-icon">
+                    <a href="./pages/cart.html" class="cart-icon" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        data-bs-title="Ver carrito de compras">
                         <i class="fa-solid fa-shopping-cart"></i>
                         <span class="cart-badge">0</span>
                     </a>
@@ -61,9 +64,9 @@
         <section class="promos">
             <div class="promo-slider">
                 <div class="slides">
-                    <img src="./assets/img/promo.png" alt="Promo 1" class="active">
-                    <img src="./assets/img/promo2.png" alt="Promo 2">
-                    <img src="./assets/img/promo3.png" alt="Promo 3">
+                    <img src="./assets/img/promo.webp" alt="Promo 1" class="active">
+                    <img src="./assets/img/promo2.webp" alt="Promo 2">
+                    <img src="./assets/img/promo3.webp" alt="Promo 3">
                 </div>
                 <div class="slider-dots">
                     <span class="dot active"></span>
@@ -79,8 +82,36 @@
             </h2>
             <div id="featured-products-container" class="productos-contenedor"
                 style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
-                <!-- Productos se cargarán aquí -->
-                <p>Cargando destacados...</p>
+                <!-- Productos Destacados Hardcodeados -->
+
+                <!-- Producto Natura -->
+                <div class="producto" data-id="prod-natura-001" data-name="Essencial Exclusivo" data-price="45000"
+                    data-image="./assets/img/Essencial.webp" data-brand="natura">
+                    <div class="img-box brand-natura"><img src="./assets/img/Essencial.webp" alt="Essencial Exclusivo">
+                    </div>
+                    <p>Essencial Exclusivo</p>
+                    <p>$45.000</p>
+                    <label><input type="checkbox" class="add-to-cart-checkbox"> Agregar</label>
+                </div>
+
+                <!-- Producto Avon -->
+                <div class="producto" data-id="prod-avon-001" data-name="Crema Anew" data-price="32000"
+                    data-image="./assets/img/CremaHAnew.webp" data-brand="avon">
+                    <div class="img-box brand-avon"><img src="./assets/img/CremaHAnew.webp" alt="Crema Anew"></div>
+                    <p>Crema Anew</p>
+                    <p>$32.000</p>
+                    <label><input type="checkbox" class="add-to-cart-checkbox"> Agregar</label>
+                </div>
+
+                <!-- Producto Arbell -->
+                <div class="producto" data-id="prod-arbell-001" data-name="Kit Solar Arbell" data-price="28000"
+                    data-image="./assets/img/Kit solar - arbell.webp" data-brand="arbell">
+                    <div class="img-box brand-arbell"><img src="./assets/img/Kit solar - arbell.webp"
+                            alt="Kit Solar Arbell"></div>
+                    <p>Kit Solar Arbell</p>
+                    <p>$28.000</p>
+                    <label><input type="checkbox" class="add-to-cart-checkbox"> Agregar</label>
+                </div>
             </div>
         </section>
     </main>
@@ -89,13 +120,13 @@
             <div class="payment">
                 <p>Métodos de pago:</p>
                 <div class="icons">
-                    <img src="./assets/img/metodos.png" width="100" alt="Métodos de pago">
+                    <img src="./assets/img/metodos.webp" width="100" alt="Métodos de pago">
                 </div>
             </div>
             <h2>
                 <p>Contacto</p>
                 <a href="./pages/Contacto.html" rel="noopener noreferrer">
-                    <img src="./assets/img/contacto.png" class="contact-icon" alt="Contacto">
+                    <img src="./assets/img/contacto.webp" class="contact-icon" alt="Contacto">
                 </a>
             </h2>
         </div>
@@ -116,6 +147,16 @@
     <script src="./assets/js/userMenu.js" type="module"></script>
     <script src="./assets/js/slider.js"></script>
     <script src="./assets/js/main.js" type="module"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Inicialización de Tooltips de Bootstrap -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Inicializar todos los tooltips de Bootstrap
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+        });
+    </script>
 </body>
 
 </html>
