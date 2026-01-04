@@ -1,4 +1,4 @@
-// assets/JS/forgotPassword.js
+// assets/js/forgotPassword.js
 // Handles the "Forgot Password" form submission.
 // Sends a POST request to the backend endpoint /api/auth/forgot-password.
 // Shows a simple alert with the server response.

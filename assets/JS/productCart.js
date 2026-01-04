@@ -31,7 +31,7 @@ export function initCart() {
 /**
  * Inicializar event listeners para checkboxes
  */
-document.addEventListener('DOMContentLoaded', () => {
+function startCartLogic() {
     initializeCartCheckboxes();
 
     // Escuchar cuando se agregan productos dinámicos
@@ -43,13 +43,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const containers = [
         document.querySelector('.productos-contenedor'),
         document.getElementById('search-results-container'),
-        document.getElementById('featured-products-container') // Added for index page
-    ].filter(Boolean); // Remove null values
+        document.getElementById('featured-products-container')
+    ].filter(Boolean);
 
     containers.forEach(container => {
         observer.observe(container, { childList: true, subtree: true });
     });
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startCartLogic);
+} else {
+    startCartLogic();
+}
 
 /**
  * Inicializar checkboxes de productos
@@ -73,6 +79,19 @@ function initializeCartCheckboxes() {
 
         checkbox.addEventListener('change', (e) => {
             handleCheckboxChange(e, productCard);
+        });
+
+        // Hacer que toda la tarjeta sea cliqueable (opcional, mejora UX)
+        productCard.style.cursor = 'pointer';
+        productCard.addEventListener('click', (e) => {
+            // Si el click fue en el checkbox o en el label, dejar que el evento 'change' lo maneje
+            if (e.target.closest('label') || e.target.classList.contains('add-to-cart-checkbox')) {
+                return;
+            }
+
+            // Simular click en el checkbox para activar el cambio
+            checkbox.checked = !checkbox.checked;
+            handleCheckboxChange({ target: checkbox }, productCard);
         });
     });
 }
