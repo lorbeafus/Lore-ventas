@@ -4,6 +4,7 @@
  */
 
 import { API_URL } from './config.js';
+import { getBasePath } from './utils.js';
 const CART_STORAGE_KEY = 'lore-ventas-cart'; // CRITICAL: Must match cart.js
 
 
@@ -152,9 +153,11 @@ async function processPayment(cart) {
         }
 
         // Get current URL for redirects
-        const baseUrl = window.location.origin;
-        const successUrl = `${baseUrl}/pages/payment-success.html`;
-        const failureUrl = `${baseUrl}/pages/payment-failure.html`;
+        const base = getBasePath();
+        const successUrl = `${window.location.origin}${base}/pages/payment-success.html`;
+        const failureUrl = `${window.location.origin}${base}/pages/payment-failure.html`;
+
+        console.log('🔗 Redirect URLs:', { successUrl, failureUrl });
 
         // Call backend to create payment
         const response = await fetch(`${API_URL}/payments/create`, {

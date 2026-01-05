@@ -6,15 +6,52 @@
 
 // ========== API Y RESPUESTAS ==========
 
+/**
+ * Obtiene el path base de la aplicación (para GitHub Pages)
+ */
+export function getBasePath() {
+    const hostname = window.location.hostname;
+    const pathname = window.location.pathname;
+
+    if (hostname.includes('github.io')) {
+        const pathSegments = pathname.split('/').filter(Boolean);
+        if (pathSegments.length > 0) {
+            const firstSegment = pathSegments[0];
+            // Si el primer segmento no es un archivo y no son carpetas conocidas de la raíz
+            if (!firstSegment.includes('.') && firstSegment !== 'pages' && firstSegment !== 'assets' && firstSegment !== 'scss') {
+                return `/${firstSegment}`;
+            }
+        }
+    }
+    return '';
+}
+
 // Constante para la base de la API
-// Si estamos en producción (GitHub Pages), usamos el backend de Render
-// Si estamos en desarrollo local, usamos localhost
 export const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
     ? 'http://localhost:3000'
     : 'https://lore-ventas-api.onrender.com';
 
 export function getApiBase() {
     return API_BASE;
+}
+
+/**
+ * Normaliza una ruta de imagen para que funcione desde cualquier página
+ */
+export function normalizeImgPath(path) {
+    if (!path) return '';
+
+    // Si ya es una URL absoluta, no tocar
+    if (path.startsWith('http') || path.startsWith('data:')) return path;
+
+    // Quitar ./ o ../ del inicio
+    let cleanPath = path.replace(/^\.\.\//, '').replace(/^\.\//, '');
+
+    // Si no empieza por assets/, y no tiene /, asumir que es relativo a assets/img/
+    // Pero aquí parece que siempre vienen como assets/img/... o ../assets/img/...
+
+    const base = getBasePath();
+    return `${base}/${cleanPath}`.replace(/\/+/g, '/');
 }
 
 export async function handleApiResponse(response) {
@@ -36,27 +73,11 @@ export async function handleApiResponse(response) {
 // ========== NAVEGACIÓN ==========
 
 export function redirectToHome() {
+    const base = getBasePath();
+
+    // Si estamos en un servidor web
     if (location.protocol === 'http:' || location.protocol === 'https:') {
-        const currentPath = location.pathname;
-
-        // Si estamos en /pages/, volver a la raíz
-        if (currentPath.includes('/pages/')) {
-            // Si estamos en GitHub Pages
-            if (location.hostname.includes('github.io')) {
-                const pathSegments = currentPath.split('/').filter(Boolean);
-                const repoName = pathSegments.length > 0 && pathSegments[0] !== 'pages'
-                    ? pathSegments[0]
-                    : '';
-
-                window.location.href = repoName ? `/${repoName}/index.html` : '/index.html';
-            } else {
-                // Localhost - volver a raíz
-                window.location.href = '/index.html';
-            }
-        } else {
-            // Ya estamos en la raíz o en otra ubicación
-            window.location.href = '/index.html';
-        }
+        window.location.href = `${location.origin}${base}/index.html`;
     } else {
         // Para archivos locales (file://)
         if (location.pathname.includes('/pages/') || location.pathname.includes('\\pages\\')) {
@@ -68,27 +89,11 @@ export function redirectToHome() {
 }
 
 export function getPageHref(pageName) {
-    // Si estamos en un servidor web (GitHub Pages o servidor local)
+    const base = getBasePath();
+
+    // Si estamos en un servidor web
     if (location.protocol === 'http:' || location.protocol === 'https:') {
-        const currentPath = location.pathname;
-
-        // Si ya estamos en /pages/, usar ruta relativa
-        if (currentPath.includes('/pages/')) {
-            return `./${pageName}`;
-        }
-
-        // Si estamos en GitHub Pages (detectar por dominio)
-        if (location.hostname.includes('github.io')) {
-            const pathSegments = currentPath.split('/').filter(Boolean);
-            const repoName = pathSegments.length > 0 && !pathSegments[0].endsWith('.html')
-                ? pathSegments[0]
-                : '';
-
-            return repoName ? `/${repoName}/pages/${pageName}` : `/pages/${pageName}`;
-        }
-
-        // Localhost u otro servidor - desde raíz
-        return `/pages/${pageName}`;
+        return `${location.origin}${base}/pages/${pageName}`;
     }
 
     // Para archivos locales (file://)

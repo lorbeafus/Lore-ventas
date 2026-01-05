@@ -3,21 +3,15 @@
  * Automatically detects environment and uses appropriate API URL
  */
 
+import { getApiBase } from './utils.js';
+
 /**
  * Get the API URL based on current environment
  * @returns {string} The API base URL
  */
 export function getApiUrl() {
-    // Check if we're on localhost (development)
-    const hostname = window.location.hostname;
-
-    if (hostname === 'localhost' || hostname === '127.0.0.1') {
-        // Development environment - local backend
-        return 'http://localhost:3000/api';
-    } else {
-        // Production environment - Render backend
-        return 'https://lore-ventas-api.onrender.com/api';
-    }
+    const base = getApiBase();
+    return `${base}/api`;
 }
 
 // Export as default constant for convenience

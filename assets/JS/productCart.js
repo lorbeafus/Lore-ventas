@@ -6,6 +6,7 @@
  */
 
 import { addToCart, removeFromCart, getCart } from './cart.js';
+import { normalizeImgPath } from './utils.js';
 
 // Export a helper to initialize cart checkboxes and observer from other modules
 export function initCart() {
@@ -114,6 +115,8 @@ function handleCheckboxChange(event, productCard) {
     }
 }
 
+
+
 /**
  * Extraer datos del producto desde la tarjeta
  */
@@ -122,7 +125,7 @@ function extractProductData(productCard) {
         id: productCard.dataset.id,
         name: productCard.dataset.name,
         price: parseFloat(productCard.dataset.price),
-        image: productCard.dataset.image,
+        image: normalizeImgPath(productCard.dataset.image),
         brand: productCard.dataset.brand
     };
 }
